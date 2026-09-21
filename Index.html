@@ -755,24 +755,28 @@ function statusOf(count,role){
 }
 
 function hexSVG(p){
-  const N=(x,y,val,big)=>`<text class="snum" x="${x}" y="${y}" text-anchor="middle" font-size="${big?26:20}" ${val===p.G?'fill="var(--crimson)"':''}>${val}</text>`;
-  const lbl=(x,t)=>`<text class="slabel" x="${x}" y="30" text-anchor="middle" font-size="9" letter-spacing="1">${t}</text>`;
-  return `<svg viewBox="0 0 366 366" width="100%" style="max-width:360px;margin:0 auto;display:block" role="img" aria-label="Number star chart">
-   <text class="slabel" x="85" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'日':'DAY'}</text>
+  const N=(x,y,val,opt)=>`<text class="snum" x="${x}" y="${y}" text-anchor="middle" font-size="${opt&&opt.big?26:20}" ${opt&&opt.core?'fill="var(--crimson)"':''}>${val}</text>`;
+  const ring=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="var(--surface2)" stroke="var(--crimson)" stroke-width="1.8"/>`;
+  const tag=(x,y,t)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="8" font-weight="700" fill="var(--crimson)" style="letter-spacing:.4px">${t}</text>`;
+  return `<svg viewBox="0 0 366 392" width="100%" style="max-width:360px;margin:0 auto;display:block" role="img" aria-label="Number star chart">
+   <text class="slabel" x="72" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'日':'DAY'}</text>
    <text class="slabel" x="150" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'月':'MTH'}</text>
    <text class="slabel" x="216" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'世纪':'CENT'}</text>
-   <text class="slabel" x="281" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'年代':'YEAR'}</text>
-   <path d="M40 96 L326 96 L183 306 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" opacity=".55"/>
-   <path d="M40 306 L326 306 L183 96 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" opacity=".55"/>
-   <line x1="45" y1="322" x2="140" y2="322" stroke="var(--gold-br)" stroke-width="2.5"/>
-   <line x1="228" y1="322" x2="322" y2="322" stroke="var(--gold-br)" stroke-width="2.5"/>
-   ${N(85,52,p.A)}${N(150,52,p.B)}${N(216,52,p.C)}${N(281,52,p.D)}
-   ${N(120,128,p.E)}${N(246,128,p.F)}
-   <circle cx="183" cy="188" r="20" fill="var(--surface2)" stroke="var(--crimson)" stroke-width="1.5"/>${N(183,196,p.G,true)}
-   ${N(120,255,p.H)}${N(246,255,p.I)}
-   ${N(183,300,p.J)}
-   ${N(70,340,p.L1)}${N(100,340,p.L2)}${N(130,340,p.L3)}
-   ${N(236,340,p.R1)}${N(266,340,p.R2)}${N(296,340,p.R3)}
+   <text class="slabel" x="294" y="18" text-anchor="middle" font-size="8" fill="var(--gold-deep)">${lang==='zh'?'年代':'YEAR'}</text>
+   <path d="M48 100 L318 100 L183 312 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" opacity=".55"/>
+   <path d="M48 312 L318 312 L183 100 Z" fill="none" stroke="var(--gold)" stroke-width="1.5" opacity=".55"/>
+   <line x1="45" y1="330" x2="140" y2="330" stroke="var(--gold-br)" stroke-width="2.5"/>
+   <line x1="228" y1="330" x2="322" y2="330" stroke="var(--gold-br)" stroke-width="2.5"/>
+   ${ring(72,47,16)}${ring(294,47,16)}
+   ${N(72,54,p.A,{core:1})}${N(150,50,p.B)}${N(216,50,p.C)}${N(294,54,p.D,{core:1})}
+   ${tag(72,80,lang==='zh'?'核心·日':'CORE·DAY')}${tag(294,80,lang==='zh'?'核心·年':'CORE·YR')}
+   ${N(122,140,p.E)}${N(244,140,p.F)}
+   ${ring(183,196,21)}${N(183,204,p.G,{big:1,core:1})}
+   ${tag(183,178,lang==='zh'?'主核心':'MAIN CORE')}
+   ${N(122,262,p.H)}${N(244,262,p.I)}
+   ${N(183,306,p.J)}
+   ${N(70,348,p.L1)}${N(100,348,p.L2)}${N(130,348,p.L3)}
+   ${N(236,348,p.R1)}${N(266,348,p.R2)}${N(296,348,p.R3)}
   </svg>`;
 }
 
@@ -875,7 +879,7 @@ function render(){
   /* --- Section: Life chart / hexagram --- */
   h+=section(1,UI.sets13,{en:"The number star built from your birthday",zh:"由生日构成的数字之星"});
   h+=`<div class="card"><div class="starwrap">
-       <div>${hexSVG(p)}</div>
+       <div>${hexSVG(p)}<p style="text-align:center;font-size:.76rem;color:var(--ink-soft);margin:6px auto 0;max-width:340px">${lang==='zh'?`<b style="color:var(--crimson)">红圈＝三大核心：</b>左＝日 <b>${r.core.left}</b>、右＝年 <b>${r.core.right}</b>、中＝主核心 <b>${r.core.main}</b>`:`<b style="color:var(--crimson)">Red circles = your 3 cores:</b> left = Day <b>${r.core.left}</b>, right = Year <b>${r.core.right}</b>, centre = Main core <b>${r.core.main}</b>`}</p></div>
        <div class="legend13">${r.sets.map((s,i)=>`<div class="r"><span class="k">${i+1}</span><span class="nm">${L(s.role)}</span><span class="vv">${s.code}</span></div>`).join("")}</div>
      </div></div>`;
   h+=`</section>`;
