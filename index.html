@@ -260,6 +260,12 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   .combo,.relnote,.tile,.union{padding:12px}
   section.block{margin-top:10px}
   footer{break-inside:avoid}
+  /* cover = page 1 on its own */
+  .cover{max-width:100%!important;margin:0!important;break-after:page;page-break-after:always;break-inside:avoid}
+  .cover-frame{box-shadow:none!important;padding:9px}
+  .cover-inner{min-height:960px;padding:26px 20px 0}
+  .cover-emblem{max-width:360px}
+  .cover-mtn{position:absolute!important}
 }
 
 /* hero CTA */
@@ -320,6 +326,29 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 .wa-btn:hover{transform:translateY(-2px);box-shadow:0 9px 26px rgba(37,211,102,.45)}
 .wa-num{font-family:var(--font-disp);font-weight:700;color:var(--gold-deep);font-size:1.1rem;margin-top:12px}
 .wa-why{font-size:.76rem;color:var(--ink-faint);margin-top:8px}
+
+/* ===== Life-Chart cover ===== */
+.cover{max-width:660px;margin:20px auto 0;position:relative}
+.cover-frame{background:
+   linear-gradient(135deg,#7a5a34,#4a3620 46%,#3c2c1c 54%,#6d4e2c);
+   padding:15px;border-radius:7px;box-shadow:0 10px 44px rgba(40,25,8,.5),inset 0 0 0 2px rgba(202,162,63,.35)}
+.cover-inner{position:relative;overflow:hidden;background:
+   radial-gradient(120% 80% at 50% 12%,#f6efdd,#ece0c4 70%,#e3d5b6);
+   border:1.5px solid #b0862a;border-radius:3px;
+   min-height:830px;display:flex;flex-direction:column;align-items:center;
+   padding:38px 26px 0;text-align:center}
+.cover-inner .cc{position:absolute;width:26px;height:26px;border:2px solid #b0862a;opacity:.8}
+.cover-inner .cc.tl{top:9px;left:9px;border-right:0;border-bottom:0}
+.cover-inner .cc.tr{top:9px;right:9px;border-left:0;border-bottom:0}
+.cover-inner .cc.bl{bottom:9px;left:9px;border-right:0;border-top:0}
+.cover-inner .cc.br{bottom:9px;right:9px;border-left:0;border-top:0}
+.cover-zh{font-family:var(--font-serif);font-weight:900;color:#2a2013;font-size:clamp(2.3rem,9vw,3.7rem);letter-spacing:.1em;line-height:1;text-wrap:nowrap}
+.cover-en{font-family:var(--font-disp);font-weight:700;letter-spacing:.24em;color:#2a2013;font-size:clamp(.95rem,3.6vw,1.5rem);margin-top:8px}
+.cover-plate{margin-top:16px;z-index:3}
+.cover-plate .nm{font-family:var(--font-serif);font-weight:700;color:#2a2013;font-size:clamp(1.3rem,5vw,1.7rem);line-height:1.2}
+.cover-plate .db{font-family:var(--font-disp);font-weight:600;color:#9a6f1f;letter-spacing:.14em;font-size:.8rem;margin-top:4px}
+.cover-emblem{width:100%;max-width:410px;margin-top:8px;position:relative;z-index:2;flex:1;display:flex;align-items:flex-start;justify-content:center}
+.cover-mtn{position:absolute;left:0;right:0;bottom:0;height:180px;z-index:1;pointer-events:none}
 </style>
 
 <header class="top no-print">
@@ -372,6 +401,7 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
     <div class="inputcard">
       <h2 data-t="enterDob">Enter Birthday</h2>
       <div class="sub" data-t="enterSub">Use the solar (Gregorian) calendar date of birth</div>
+      <div class="field" style="margin-bottom:11px"><label data-t="nameLbl">Name 姓名</label><input id="inName" type="text" maxlength="40" placeholder="e.g. Daniel Phua" autocomplete="off"></div>
       <div class="dob">
         <div class="field"><label data-t="day">Day</label><input id="inDay" type="number" min="1" max="31" placeholder="04" inputmode="numeric"></div>
         <div class="field"><label data-t="month">Month</label><input id="inMonth" type="number" min="1" max="12" placeholder="12" inputmode="numeric"></div>
@@ -403,13 +433,14 @@ const UI = {
   master:{en:"I Ching Numerology & the Shuyi method",zh:"易经数字能量 · 术易教学法"},
   enterDob:{en:"Enter Your Birthday",zh:"输入您的生日"},
   enterSub:{en:"Use your solar (Gregorian) calendar date of birth",zh:"请使用阳历（公历）出生日期"},
-  day:{en:"Day",zh:"日"},month:{en:"Month",zh:"月"},year:{en:"Year",zh:"年"},
+  nameLbl:{en:"Name 姓名",zh:"姓名 Name"},day:{en:"Day",zh:"日"},month:{en:"Month",zh:"月"},year:{en:"Year",zh:"年"},
+  lifeChart:{en:"Your Life Chart",zh:"你的人生命盘"},bornOn:{en:"Born",zh:"生辰"},nameField:{en:"Name",zh:"姓名"},
   calc:{en:"Reveal My Numerology ✦",zh:"揭示我的数字能量 ✦"},
   etiquette:{en:"Shuyi etiquette: compute between 7am–9pm · use only blue or black pen · do not compute for the deceased · avoid the 3 days before & after Qing Ming / Hungry Ghost Festival.",
              zh:"术易规矩：早上7点至晚上9点之间计算 · 只用蓝色或黑色笔 · 不为已故者计算 · 避开清明／中元节前后三天。"},
   disclaimer:{en:"Created for Coach Daniel Phua. This tool is for self-reflection, cultural learning and entertainment; it is not a substitute for professional medical, financial, legal or psychological advice. Method & content based on the Shuyi teaching materials provided.",
               zh:"为 Daniel Phua 教练打造。本工具用于自我反思、文化学习与娱乐，不能替代专业的医疗、财务、法律或心理建议。方法与内容依据所提供的术易教材。"},
-  yourChart:{en:"Your Life Chart",zh:"您的生命图"},
+  yourChart:{en:"Chart Summary",zh:"命盘总览"},
   coreN:{en:"Core Numbers",zh:"核心数字"},
   destiny:{en:"Destiny Number",zh:"天命数字"},
   element:{en:"Your Element",zh:"您的五行"},
@@ -876,6 +907,87 @@ function renderPublic(){
 }
 function renderAll(){ root.setAttribute("data-lang",lang); renderPublic(); render(); }
 
+/* ============ COVER PAGE (你的人生命盘) ============ */
+function baguaSVG(p){
+  const cx=200,cy=196,GOLD="#b0862a",GOLDBR="#caa23f",INK="#2a2013",PAP="#f2ead6",RED="#b0463a";
+  // 8 Earlier-Heaven trigrams, top->bottom lines (1=yang solid, 0=yin broken), clockwise from top
+  const TRI=[[1,1,1],[0,1,1],[1,0,1],[0,0,1],[0,0,0],[1,0,0],[0,1,0],[1,1,0]];
+  let tg="";
+  const R=138;
+  for(let i=0;i<8;i++){
+    const a=i*Math.PI/4, tx=cx+R*Math.sin(a), ty=cy-R*Math.cos(a);
+    TRI[i].forEach((v,li)=>{ const y=ty-13+li*13;
+      if(v) tg+=`<rect x="${tx-22}" y="${y-3}" width="44" height="6.4" rx="1.6" fill="${GOLD}"/>`;
+      else  tg+=`<rect x="${tx-22}" y="${y-3}" width="17" height="6.4" rx="1.6" fill="${GOLD}"/><rect x="${tx+5}" y="${y-3}" width="17" height="6.4" rx="1.6" fill="${GOLD}"/>`;
+    });
+  }
+  // outer ring tick marks
+  let ticks=""; for(let i=0;i<72;i++){ const a=i*Math.PI/36, r1=182, r2=(i%9===0)?170:176; ticks+=`<line x1="${cx+r1*Math.sin(a)}" y1="${cy-r1*Math.cos(a)}" x2="${cx+r2*Math.sin(a)}" y2="${cy-r2*Math.cos(a)}" stroke="${GOLD}" stroke-width="${i%9===0?1.6:0.9}" opacity=".8"/>`; }
+  // orbital dots
+  let dots=""; for(let i=0;i<8;i++){ const a=i*Math.PI/4+Math.PI/8, rr=192; dots+=`<circle cx="${cx+rr*Math.sin(a)}" cy="${cy-rr*Math.cos(a)}" r="2.4" fill="${GOLD}"/>`; }
+  // taiji (yin-yang)
+  const tr=46;
+  const taiji=`
+   <circle cx="${cx}" cy="${cy}" r="${tr+4}" fill="none" stroke="${GOLD}" stroke-width="2"/>
+   <circle cx="${cx}" cy="${cy}" r="${tr}" fill="${PAP}"/>
+   <path d="M ${cx} ${cy-tr} A ${tr} ${tr} 0 0 1 ${cx} ${cy+tr} A ${tr/2} ${tr/2} 0 0 1 ${cx} ${cy} A ${tr/2} ${tr/2} 0 0 0 ${cx} ${cy-tr} Z" fill="${INK}"/>
+   <circle cx="${cx}" cy="${cy-tr/2}" r="${tr/6}" fill="${PAP}"/>
+   <circle cx="${cx}" cy="${cy+tr/2}" r="${tr/6}" fill="${INK}"/>`;
+  // inverted triangle with the person's numbers
+  const num=(x,y,v,core)=>`<text x="${x}" y="${y}" text-anchor="middle" font-size="${core?27:23}" font-family="'Cinzel','Noto Serif SC',serif" font-weight="700" fill="${core?RED:INK}">${v}</text>`;
+  const triTop=418, triBot=560, triL=104, triR=296;
+  const tri=`
+   <path d="M${triL} ${triTop} L${triR} ${triTop} L${(triL+triR)/2} ${triBot} Z" fill="none" stroke="${GOLD}" stroke-width="2"/>
+   <line x1="${triL+18}" y1="${triTop+52}" x2="${triR-18}" y2="${triTop+52}" stroke="${GOLD}" stroke-width="1" opacity=".5"/>
+   <line x1="${triL+44}" y1="${triTop+100}" x2="${triR-44}" y2="${triTop+100}" stroke="${GOLD}" stroke-width="1" opacity=".5"/>
+   ${num(133,triTop+34,p.A,1)}${num(178,triTop+34,p.B)}${num(222,triTop+34,p.C)}${num(267,triTop+34,p.D,1)}
+   ${num(165,triTop+86,p.E)}${num(235,triTop+86,p.F)}
+   ${num(200,triTop+134,p.G,1)}`;
+  // connector line wheel -> triangle, and terminal
+  const conn=`
+   <line x1="${cx}" y1="382" x2="${cx}" y2="${triTop}" stroke="${GOLD}" stroke-width="1.4"/>
+   <circle cx="${cx}" cy="382" r="4" fill="none" stroke="${GOLD}" stroke-width="1.4"/>
+   <circle cx="${cx}" cy="${triTop}" r="3" fill="${GOLD}"/>
+   <line x1="${cx}" y1="${triBot}" x2="${cx}" y2="590" stroke="${GOLD}" stroke-width="1.4"/>
+   <circle cx="${cx}" cy="596" r="6" fill="none" stroke="${GOLD}" stroke-width="1.6"/><circle cx="${cx}" cy="596" r="2.2" fill="${GOLD}"/>`;
+  return `<svg viewBox="0 0 400 620" width="100%" style="display:block" role="img" aria-label="Bagua life chart">
+    <circle cx="${cx}" cy="${cy}" r="166" fill="none" stroke="${GOLD}" stroke-width="1.2" opacity=".55"/>
+    <circle cx="${cx}" cy="${cy}" r="108" fill="none" stroke="${GOLD}" stroke-width="1" opacity=".45"/>
+    <circle cx="${cx}" cy="${cy}" r="184" fill="none" stroke="${GOLD}" stroke-width="1.6"/>
+    ${ticks}${dots}${tg}
+    <g>${(function(){let s="";for(let i=0;i<8;i++){const a=i*Math.PI/4;s+=`<line x1="${cx+64*Math.sin(a)}" y1="${cy-64*Math.cos(a)}" x2="${cx+104*Math.sin(a)}" y2="${cy-104*Math.cos(a)}" stroke="${GOLD}" stroke-width="0.8" opacity=".4"/>`;}return s;})()}</g>
+    ${taiji}${conn}${tri}
+  </svg>`;
+}
+function mountainsSVG(){
+  const INK="#3a3226",RED="#b0463a";
+  return `<svg viewBox="0 0 660 190" preserveAspectRatio="none" width="100%" height="100%" aria-hidden="true">
+    <circle cx="516" cy="104" r="25" fill="${RED}" opacity=".85"/>
+    <path d="M0,190 L0,120 Q90,74 190,108 Q280,138 380,104 Q470,76 560,116 L660,92 L660,190Z" fill="${INK}" opacity=".14"/>
+    <path d="M0,190 L0,146 Q110,104 250,140 Q360,168 470,138 L660,120 L660,190Z" fill="${INK}" opacity=".22"/>
+    <path d="M0,190 L0,164 Q140,132 300,162 Q430,186 560,160 L660,150 L660,190Z" fill="${INK}" opacity=".34"/>
+  </svg>`;
+}
+function coverPage(r){
+  const nm = r.name && r.name.length ? esc(r.name) : (lang==='zh'?'（未署名）':'—');
+  const dob = `${String(r.day).padStart(2,'0')} · ${String(r.month).padStart(2,'0')} · ${r.year}`;
+  return `<div class="cover">
+    <div class="cover-frame">
+      <div class="cover-inner">
+        <span class="cc tl"></span><span class="cc tr"></span><span class="cc bl"></span><span class="cc br"></span>
+        <div class="cover-zh">你的人生命盘</div>
+        <div class="cover-en">Your Life Chart</div>
+        <div class="cover-plate">
+          <div class="nm">${nm}</div>
+          <div class="db">${lang==='zh'?'生辰':'BORN'} · <span class="tnum">${dob}</span></div>
+        </div>
+        <div class="cover-emblem">${baguaSVG(r.pos)}</div>
+        <div class="cover-mtn">${mountainsSVG()}</div>
+      </div>
+    </div>
+  </div>`;
+}
+
 function render(){
   root.setAttribute("data-lang",lang);
   document.querySelectorAll("[data-t]").forEach(n=>{const k=n.getAttribute("data-t"); if(UI[k])n.textContent=L(UI[k]);});
@@ -886,6 +998,7 @@ function render(){
   R.classList.remove("hide");
   const dobStr = `${String(r.day).padStart(2,'0')}/${String(r.month).padStart(2,'0')}/${r.year}`;
   let h="";
+  h+=coverPage(r);
 
   /* --- Summary --- */
   h+=`<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px">
@@ -1200,6 +1313,7 @@ function doCalc(){
   if(!validDate(d,m,y)){ err.textContent=lang==='zh'?"请输入有效的阳历生日（日 1-31，月 1-12，年 1900-2100）。":"Please enter a valid solar birthday (day 1-31, month 1-12, year 1900-2100)."; err.classList.remove("hide"); return; }
   err.classList.add("hide");
   last=compute(d,m,y);
+  last.name=(document.getElementById("inName").value||"").trim();
   render();
   setTimeout(()=>{document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});},80);
 }
