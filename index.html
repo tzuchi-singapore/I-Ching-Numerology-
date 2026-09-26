@@ -251,6 +251,15 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   svg,img{break-inside:avoid;page-break-inside:avoid}
   .tablewrap{overflow:visible!important}
   .cyc-mini .m{margin-bottom:10px}
+  /* keep image-heavy cards short enough to fit one page (this was the remaining cut-off) */
+  body{font-size:12px}
+  .corecard .imgwrap{max-width:200px;margin:0 auto 8px}
+  .numcard .numimg{width:70px;height:52px}
+  .starwrap svg{max-height:300px}
+  .card{padding:14px}
+  .combo,.relnote,.tile,.union{padding:12px}
+  section.block{margin-top:10px}
+  footer{break-inside:avoid}
 }
 
 /* hero CTA */
@@ -739,8 +748,9 @@ function compute(day,month,year){
   // core numbers
   const core={left:A,right:D,main:G};
   const destiny=reduce(reduce(A+D)+G);
-  // missing
-  const present=new Set(all16);
+  // missing numbers — from the MAIN triangle (the 7 numbers: 4 top + 2 + main core), not the full star
+  const main7=[A,B,C,D,E,F,G];
+  const present=new Set(main7);
   const missing=[]; for(let n=1;n<=9;n++) if(!present.has(n)) missing.push(n);
   // element counts
   const selfElem=ELEM_OF_NUM[G];
