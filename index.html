@@ -260,14 +260,17 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   .combo,.relnote,.tile,.union{padding:12px}
   section.block{margin-top:10px}
   footer{break-inside:avoid}
-  /* cover = exactly one page, sized in mm so it never spills across print engines */
+  /* cover = one page. Sized well under A4 so it survives Safari's own print header/footer strips */
   .cover{max-width:100%!important;width:100%!important;margin:0!important;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}
-  .cover-frame{box-shadow:none!important;padding:2mm}
-  .cover-inner{height:250mm;min-height:0!important;padding:12mm 10mm 0;justify-content:flex-start}
-  .cover-zh{font-size:34pt}
-  .cover-en{font-size:14pt}
-  .cover-emblem{max-width:78mm;flex:0 0 auto;margin-top:6mm}
-  .cover-mtn{position:absolute!important;height:38mm}
+  .cover-frame{box-shadow:none!important;padding:1.5mm}
+  .cover-inner{height:215mm;min-height:0!important;overflow:hidden!important;padding:9mm 8mm 0;justify-content:flex-start}
+  .cover-zh{font-size:27pt;letter-spacing:.06em}
+  .cover-en{font-size:11pt;margin-top:4px}
+  .cover-plate{margin-top:9px}
+  .cover-plate .nm{font-size:15pt}
+  .cover-plate .db{font-size:8pt}
+  .cover-emblem{max-width:66mm;flex:0 0 auto;margin-top:4mm}
+  .cover-mtn{position:absolute!important;height:30mm}
 }
 
 /* hero CTA */
