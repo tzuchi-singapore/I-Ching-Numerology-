@@ -260,12 +260,14 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   .combo,.relnote,.tile,.union{padding:12px}
   section.block{margin-top:10px}
   footer{break-inside:avoid}
-  /* cover = page 1 on its own */
-  .cover{max-width:100%!important;margin:0!important;break-after:page;page-break-after:always;break-inside:avoid}
-  .cover-frame{box-shadow:none!important;padding:9px}
-  .cover-inner{min-height:960px;padding:26px 20px 0}
-  .cover-emblem{max-width:360px}
-  .cover-mtn{position:absolute!important}
+  /* cover = exactly one page, sized in mm so it never spills across print engines */
+  .cover{max-width:100%!important;width:100%!important;margin:0!important;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}
+  .cover-frame{box-shadow:none!important;padding:2mm}
+  .cover-inner{height:250mm;min-height:0!important;padding:12mm 10mm 0;justify-content:flex-start}
+  .cover-zh{font-size:34pt}
+  .cover-en{font-size:14pt}
+  .cover-emblem{max-width:78mm;flex:0 0 auto;margin-top:6mm}
+  .cover-mtn{position:absolute!important;height:38mm}
 }
 
 /* hero CTA */
