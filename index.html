@@ -324,6 +324,40 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 .fame-why{font-size:.8rem;color:var(--ink-soft);margin:9px 0 0;line-height:1.5}
 .fame-note{font-size:.72rem;color:var(--ink-faint);text-align:center;margin-top:12px;line-height:1.5;max-width:70ch;margin-left:auto;margin-right:auto}
 
+/* lucky colours */
+.lc-sw{display:inline-block;width:20px;height:20px;border-radius:6px;border:1px solid rgba(0,0,0,.18);box-shadow:inset 0 0 0 1px rgba(255,255,255,.28);vertical-align:middle}
+.lc-sw.big{width:26px;height:26px;border-radius:7px}
+.lc-sws{display:inline-flex;flex-wrap:wrap;gap:3px;align-items:center}
+.lc-ref{display:flex;flex-direction:column;gap:7px;margin-top:8px}
+.lc-refrow{display:flex;align-items:center;gap:11px;background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 11px}
+.lc-refrow.me{border-color:var(--crimson);background:color-mix(in srgb,var(--crimson) 7%,var(--surface2))}
+.lc-el{flex:none;width:30px;height:30px;border-radius:50%;display:grid;place-items:center;color:#fff;font-family:var(--font-serif);font-weight:700;font-size:1rem}
+.lc-elname{font-size:.82rem;color:var(--ink-soft)}
+.lc-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:640px){.lc-two{grid-template-columns:1fr}}
+.lc-box{border:1px solid var(--line);border-radius:12px;padding:14px}
+.lc-box.wear{background:color-mix(in srgb,var(--good) 7%,var(--surface));border-color:color-mix(in srgb,var(--good) 35%,var(--line))}
+.lc-box.avoid{background:color-mix(in srgb,var(--bad) 6%,var(--surface));border-color:color-mix(in srgb,var(--bad) 32%,var(--line))}
+.lc-bh{font-size:.74rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--ink)}
+.lc-bh.good{color:var(--good)} .lc-bh.bad{color:var(--bad)}
+.lc-line{display:flex;gap:10px;align-items:center;margin-top:10px}
+.lc-line b{font-size:.9rem;color:var(--ink)}
+.lc-sub{display:block;font-size:.74rem;color:var(--ink-faint)}
+.lc-mini{font-size:.76rem;color:var(--ink-faint);margin:10px 0 0;line-height:1.5}
+.lc-wear-mat,.lc-when,.lc-refwrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.lc-when ul{margin:8px 0 0;padding-left:18px;font-size:.86rem;color:var(--ink-soft)}
+.lc-when li{margin:4px 0}
+.lc-nudge{margin-top:12px;text-align:center;background:linear-gradient(160deg,var(--surface),var(--surface2))}
+/* free-calc lucky teaser */
+.calc-luck{margin-top:14px;padding:13px 15px;border:1px dashed var(--line);border-radius:12px;background:var(--surface2)}
+.cl-h{font-size:.84rem;font-weight:700;color:var(--gold-deep)}
+.cl-row{display:flex;align-items:center;gap:8px;margin-top:9px;flex-wrap:wrap}
+.cl-lbl{flex:none;font-size:.66rem;font-weight:700;text-transform:uppercase;letter-spacing:.04em;padding:3px 8px;border-radius:20px}
+.cl-lbl.good{background:color-mix(in srgb,var(--good) 18%,transparent);color:var(--good)}
+.cl-lbl.bad{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
+.cl-txt{font-size:.8rem;color:var(--ink-soft)}
+.cl-note{font-size:.78rem;color:var(--ink-faint);margin:11px 0 0;line-height:1.55}
+
 /* public free calculator */
 .calc-card{text-align:center}
 .calc-dob{display:grid;grid-template-columns:1fr 1fr 1.2fr;gap:10px;max-width:420px;margin:0 auto}
@@ -930,6 +964,24 @@ const GENERATES={wood:"fire",fire:"earth",earth:"metal",metal:"water",water:"woo
 const OVERCOMES={wood:"earth",earth:"water",water:"fire",fire:"metal",metal:"wood"};
 function genBy(e){for(const k in GENERATES)if(GENERATES[k]===e)return k;} // who generates e
 function overBy(e){for(const k in OVERCOMES)if(OVERCOMES[k]===e)return k;} // who overcomes e
+/* ---- Lucky colours: concrete swatches, stones/materials & wear guidance per element ---- */
+const SWATCH={
+ metal:["#F6F4EE","#D7BE78","#C3C6CC"],
+ water:["#15171C","#2C6699","#7C8894"],
+ fire :["#C62A1E","#7D3CA0","#E583A8","#E8832B"],
+ wood :["#2E7D46","#7CBE86"],
+ earth:["#D9A441","#8C5A2B","#6E4B2A"]
+};
+const MATERIALS={
+ metal:{en:"gold, silver or white-gold jewellery · pearl · titanium quartz",zh:"金饰、银饰、白金 · 珍珠 · 钛晶"},
+ water:{en:"black obsidian · blue aquamarine · sapphire · a black-cord bracelet",zh:"黑曜石 · 海蓝宝 · 蓝宝石 · 黑绳手链"},
+ fire :{en:"red agate · garnet · a red string/cord · amethyst",zh:"红玛瑙 · 石榴石 · 红绳 · 紫水晶"},
+ wood :{en:"a sandalwood or agarwood bracelet · green jade · green aventurine",zh:"檀木／沉香手串 · 翡翠 · 绿东陵"},
+ earth:{en:"yellow citrine · tiger's-eye · topaz · ceramic beads",zh:"黄水晶 · 虎眼石 · 黄玉 · 陶瓷珠"}
+};
+// 生我 (genBy) nourishes you → lucky; 克我 (overBy) drains you → use sparingly
+function colourPlan(self){ return {self:self, res:genBy(self), foe:overBy(self)}; }
+function swRow(e){ return SWATCH[e].map(c=>`<span class="lc-sw" style="background:${c}"></span>`).join(""); }
 /* relationship buckets relative to self element */
 const REL = {
  self:{en:"Self (Me) 自身",zh:"自身（我）",b:4,who:{en:"Health & identity",zh:"健康与自我"}},
@@ -1202,6 +1254,10 @@ function runPublicCalc(){
   res.innerHTML=`<div class="calc-out"><div class="calc-tri" aria-hidden="true"><div class="ct-row"><div class="ct-n">${A}</div><div class="ct-n">${B}</div><div class="ct-n">${C}</div><div class="ct-n">${D}</div></div><div class="ct-arrow">▽</div><div class="ct-row"><div class="ct-n mid">${E}</div><div class="ct-n mid">${F}</div></div><div class="ct-arrow">▽</div><div class="ct-row"><div class="ct-n ct-apex" style="background:${EG[el]}">${G}</div></div></div>
     <div class="calc-core"><div class="cc-lbl">${lang==='zh'?'你的核心数字':'Your Core Number'}</div><div class="cc-title"><span class="cc-num">${G}</span> ${L(NUM[G].title)} <span class="cc-el">${elLabel}</span></div></div>
     <div class="calc-pn"><div class="pn pos"><div class="t">✦ ${lang==='zh'?'你的天赋（正面）':'Your Gift (positive)'}</div><p>${L(NUM[G].pos)}</p></div><div class="pn neg"><div class="t">△ ${lang==='zh'?'你的阴影（负面）':'Your Shadow (negative)'}</div><p>${L(NUM[G].neg)}</p></div></div>
+    ${(()=>{const cp=colourPlan(el);return `<div class="calc-luck"><div class="cl-h">🎨 ${lang==='zh'?'你的幸运色':'Your Lucky Colours'}</div>
+      <div class="cl-row"><span class="cl-lbl good">${lang==='zh'?'多穿':'Wear more'}</span><span class="lc-sws">${swRow(cp.self)}${swRow(cp.res)}</span><span class="cl-txt">${L(ELEM[cp.self].colors)} · ${L(ELEM[cp.res].colors)}</span></div>
+      <div class="cl-row"><span class="cl-lbl bad">${lang==='zh'?'少穿':'Ease off'}</span><span class="lc-sws">${swRow(cp.foe)}</span><span class="cl-txt">${L(ELEM[cp.foe].colors)}</span></div>
+      <p class="cl-note">${lang==='zh'?'颜色会悄悄影响别人对你的感觉——面试、谈判、签约那一刻尤其明显。想知道你该戴什么、避开什么？往下看或私讯 Daniel 大师。':"Colour quietly shapes how people read you — never more than in an interview, a negotiation or the moment you close a deal. Want to know what to wear and what to avoid? Read on below, or message Master Daniel."}</p></div>`;})()}
     <div class="calc-cta"><p class="cta-copy">${ctaCopy}</p><a class="wa-btn" href="${wa}" target="_blank" rel="noopener">${ic}${btnText}</a><p class="cta-sub">${subText}</p></div></div>`;
   try{res.querySelector(".calc-out").scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
 }
@@ -1209,7 +1265,7 @@ function renderPublic(){
   const V=document.getElementById("publicView"); if(!V)return;
   let h="";
   // Sticky quick-jump bar
-  h+=`<div class="quicknav-wrap no-print"><nav class="quicknav" aria-label="Jump to section"><span class="qn-pre">${lang==='zh'?'跳转':'Jump'}</span>${[['sec-whatis','✦',lang==='zh'?'介绍':'Intro'],['sec-calc','✦',lang==='zh'?'免费测算':'Try it'],['sec-numbers','9',lang==='zh'?'九大数字':'Numbers'],['sec-famous','★',lang==='zh'?'名人':'Famous'],['sec-triangle','▽',lang==='zh'?'三角法':'Triangle'],['sec-name','名',lang==='zh'?'姓名':'Name'],['sec-learn','☯',lang==='zh'?'学习':'Learn'],['contact','✦',lang==='zh'?'找我解读':'Get Reading']].map(x=>`<button class="qn" data-go="${x[0]}"><span class="qi">${x[1]}</span>${x[2]}</button>`).join("")}</nav></div>`;
+  h+=`<div class="quicknav-wrap no-print"><nav class="quicknav" aria-label="Jump to section"><span class="qn-pre">${lang==='zh'?'跳转':'Jump'}</span>${[['sec-whatis','✦',lang==='zh'?'介绍':'Intro'],['sec-calc','✦',lang==='zh'?'免费测算':'Try it'],['sec-numbers','9',lang==='zh'?'九大数字':'Numbers'],['sec-famous','★',lang==='zh'?'名人':'Famous'],['sec-colours','色',lang==='zh'?'幸运色':'Colours'],['sec-triangle','▽',lang==='zh'?'三角法':'Triangle'],['sec-name','名',lang==='zh'?'姓名':'Name'],['sec-learn','☯',lang==='zh'?'学习':'Learn'],['contact','✦',lang==='zh'?'找我解读':'Get Reading']].map(x=>`<button class="qn" data-go="${x[0]}"><span class="qi">${x[1]}</span>${x[2]}</button>`).join("")}</nav></div>`;
   // What is
   h+=`<section class="block" id="sec-whatis" style="margin-top:20px"><div class="sec-head"><div class="n">✦</div><div><h2>${L(UI.whatIs)}</h2></div></div>
       <div class="card"><p style="font-size:.95rem;color:var(--ink-soft);margin:0">${L(UI.whatIsBody)}</p></div>
@@ -1234,6 +1290,14 @@ function renderPublic(){
   h+=`<section class="block" id="sec-famous"><div class="sec-head"><div class="n">★</div><div><h2>${lang==='zh'?'名人核心数字':'Famous Core Numbers'}<span class="en">${lang==='zh'?'Hall of Fame':'名人堂'}</span></h2><p>${lang==='zh'?'世界名人与你共享同一个核心数字——用本应用相同的方法，从他们公开的生日推算。':"World-famous achievers who share each core number — worked out from their public birth dates with this app's own method."}</p></div></div>
       <div class="fame-grid">${FAMOUS.map(f=>`<div class="fame-card el-${f.el}"><div class="fame-med">${f.n}</div><div class="fame-body"><div class="fame-title">${L(NUM[f.n].title)}<span class="fame-el">${L(ELNAME[f.el])}</span></div>${f.people.map(p=>`<div class="fame-person"><span class="fp-name">${lang==='zh'?p.zh:p.en}</span><span class="fp-role">${L(p.role)} · ${p.dob}</span></div>`).join("")}<p class="fame-why">${L(f.why)}</p></div></div>`).join("")}</div>
       <p class="fame-note">${lang==='zh'?'仅供文化参考与启发；以上人物与本服务并无关联，亦未代言。想验证？在管理页输入任一生日，便会得到相同的核心数字。':"For cultural interest and inspiration only — these figures are independent and not affiliated with this reading. Want to verify? Enter any of these birthdays in the admin page and you'll get the same core number."}</p></section>`;
+  // Lucky colours (public explainer)
+  h+=`<section class="block" id="sec-colours"><div class="sec-head"><div class="n">色</div><div><h2>${lang==='zh'?'颜色的力量 · 你的幸运色':'The Power of Colour'}<span class="en">${lang==='zh'?'Lucky Colours':'幸运色'}</span></h2><p>${lang==='zh'?'颜色不只是好看——它是最快调动你能量场的方式。':'Colour isn’t just how you look — it’s the fastest way to shift the energy you carry.'}</p></div></div>
+      <div class="card"><p style="font-size:.95rem;color:var(--ink-soft);margin:0 0 10px">${lang==='zh'?'五行各有颜色。你身上的颜色，会悄悄改变别人对你的感觉：会议里的自信、谈判桌上的信任、第一次见面的温度、面试时的分量。穿对喂养你五行的颜色，一整天仿佛顺水推舟；穿错克你的颜色，便像整天都在逆流而行。<b>尤其在签约、成交、谈判那一刻，颜色往往是你没察觉、却正在影响结果的那一手。</b>':'Each of the five elements carries a colour. The colour you wear quietly changes how people read you — your confidence in a meeting, the trust you project at the negotiating table, the warmth on a first meeting, the weight you carry in an interview. Wear the colour that <i>feeds</i> your element and the day feels like it flows with you; wear the one that <i>drains</i> it and you feel like you’re pushing against the current all day. <b>Above all in the moment you sign, close or negotiate a deal, colour is the quiet hand shaping the outcome you never noticed.</b>'}</p>
+        <div class="lc-ref">${ELEM_ORDER.map(e=>`<div class="lc-refrow"><span class="lc-el" style="background:${ELEM[e].color}">${ELEM[e].zh}</span><span class="lc-sws">${swRow(e)}</span><span class="lc-elname">${lang==='zh'?ELEM[e].en:ELEM[e].en} · ${L(ELEM[e].colors)}</span></div>`).join("")}</div>
+      </div>
+      <div class="card lc-nudge"><p style="margin:0">${lang==='zh'?'<b>你的</b>幸运色取决于你自己的五行——藏在你的生日里。用上面的免费测算先看一眼，或私讯 Daniel 大师，拿到你完整的幸运色、该戴什么、该避开什么的建议。':'<b>Your</b> lucky colour depends on your own element — hidden in your birthday. Try the free calculator above for a first glimpse, or message Master Daniel for your full palette: which colours to wear, what to put on your wrist, and what to avoid.'}</p>
+        <a class="wa-btn" href="${waLink()}" target="_blank" rel="noopener" style="margin-top:14px"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2 22l5.25-1.38a9.9 9.9 0 0 0 4.79 1.22h.01c5.46 0 9.91-4.45 9.91-9.91 0-2.65-1.03-5.14-2.9-7.01A9.82 9.82 0 0 0 12.04 2z"/></svg>${lang==='zh'?'找出我的幸运色 ✦':'Find my lucky colours ✦'}</a></div>
+      </section>`;
   // Simple triangle
   h+=`<section class="block" id="sec-triangle"><div class="sec-head"><div class="n">▽</div><div><h2>${L(UI.simpleTri)}</h2><p>${L(UI.simpleTriSub)}</p></div></div>
       <div class="card"><div class="tri-explain">
@@ -1474,32 +1538,37 @@ function render(){
   h+=elementSection(r);
   h+=`</section>`;
 
+  /* --- Lucky colours --- */
+  h+=section(5,{en:"Lucky Colours & What to Wear",zh:"幸运色与穿戴建议"},{en:"The colours and accessories that feed your element — and the ones to avoid",zh:"喂养你五行的颜色与配饰——以及该避开的"});
+  h+=luckyColourSection(r);
+  h+=`</section>`;
+
   /* --- Missing --- */
-  h+=section(5,UI.missT,{en:"Energies absent from your chart",zh:"命盘中缺失的能量"});
+  h+=section(6,UI.missT,{en:"Energies absent from your chart",zh:"命盘中缺失的能量"});
   if(r.missing.length===0){ h+=`<div class="card none-miss">✦ ${L(UI.noMiss)}</div>`; }
   else { h+=`<div class="grid g2">${r.missing.map(n=>`<div class="card miss"><h3 style="color:var(--bad);font-size:1.05rem">${L(MISSING[n].t)}</h3><ul style="margin:8px 0 0;padding-left:18px;font-size:.86rem;color:var(--ink-soft)">${L(MISSING[n].pts).map(x=>`<li>${esc(x)}</li>`).join("")}</ul></div>`).join("")}</div>`; }
   h+=`</section>`;
 
   /* --- 13 combos detail --- */
-  h+=section(6,{en:"Combination Readings",zh:"联合数字解读"},{en:"The 81-combination meaning for each set you carry",zh:"你所拥有的每组数字的 81 组含义"});
+  h+=section(7,{en:"Combination Readings",zh:"联合数字解读"},{en:"The 81-combination meaning for each set you carry",zh:"你所拥有的每组数字的 81 组含义"});
   h+=`<div class="grid g2">${r.sets.map(comboCard).join("")}</div></section>`;
 
   /* --- Zodiac --- */
-  h+=section(7,UI.zodiac,{en:"Your zodiac, unions, meetings, clashes & harms",zh:"生肖、合、会、冲、害"});
+  h+=section(8,UI.zodiac,{en:"Your zodiac, unions, meetings, clashes & harms",zh:"生肖、合、会、冲、害"});
   h+=zodiacSection(r);
   h+=`</section>`;
 
   /* --- Cycle --- */
-  h+=section(8,UI.cycleYear,{en:"Where you are in the 9-year cycle — pick any year",zh:"你在9年周期中的位置——可选任意年份"});
+  h+=section(9,UI.cycleYear,{en:"Where you are in the 9-year cycle — pick any year",zh:"你在9年周期中的位置——可选任意年份"});
   h+=`<div class="card" id="cycleCard"></div></section>`;
 
   /* --- 81 codes library --- */
-  h+=section(9,UI.codes81T,UI.codes81Sub);
+  h+=section(10,UI.codes81T,UI.codes81Sub);
   h+=code81Grid(r);
   h+=`</section>`;
 
   /* --- Learn --- */
-  h+=section(10,UI.learnT,{en:"Tap any card to explore the deeper knowledge",zh:"点击任意卡片，探索更深的知识"});
+  h+=section(11,UI.learnT,{en:"Tap any card to explore the deeper knowledge",zh:"点击任意卡片，探索更深的知识"});
   h+=`<div class="learn-grid">${LEARN.map(c=>`<button class="learn" data-learn="${c.id}"><div class="ic">${c.ic}</div><div class="en">${c.en}</div><h4>${L(c.t)}</h4><p>${L(c.p)}</p><span class="more">${L(UI.clickMore)}</span></button>`).join("")}</div></section>`;
 
   R.innerHTML=h;
@@ -1529,6 +1598,37 @@ const REL_SHORT={
  overme:{en:"Official / Illness",zh:"官鬼疾病",sub:{en:"Overcomes me 克我",zh:"克我"}},
  genme:{en:"Parent / Benefactor",zh:"父母贵人",sub:{en:"Generates me 生我",zh:"生我"}}
 };
+function luckyColourSection(r){
+  const self=r.selfElem, cp=colourPlan(self);
+  const elN=e=>lang==='zh'?ELEM[e].zh+'（'+ELEM[e].en+'）':ELEM[e].en+' '+ELEM[e].zh;
+  const swBig=e=>SWATCH[e].map(c=>`<span class="lc-sw big" style="background:${c}"></span>`).join("");
+  let h=`<div class="card">`;
+  h+=`<p style="font-size:.92rem;color:var(--ink-soft);margin:0 0 14px">${lang==='zh'
+    ?`你的本命五行是 <b style="color:${ELEM[self].color}">${ELEM[self].zh}（${ELEM[self].en}）</b>。颜色带有五行能量：穿上<b>生你</b>与<b>你本命</b>的颜色，能量被滋养、底气更足；而<b>克你</b>的颜色会悄悄消耗你。以下是为你量身的穿戴建议。`
+    :`Your element is <b style="color:${ELEM[self].color}">${ELEM[self].en} (${ELEM[self].zh})</b>. Colour carries elemental energy: wearing the colours that <b>feed</b> your element (and your own) keeps you nourished and steady, while the colour that <b>drains</b> it quietly works against you. Here is your personal guide.`}</p>`;
+  h+=`<div class="lc-two">
+    <div class="lc-box wear"><div class="lc-bh good">✦ ${lang==='zh'?'多穿这些颜色':'Wear these colours'}</div>
+      <div class="lc-line"><span class="lc-sws">${swBig(self)}</span><div><b>${elN(self)}</b><span class="lc-sub">${L(ELEM[self].colors)} · ${lang==='zh'?'你的本命色':'your own element'}</span></div></div>
+      <div class="lc-line"><span class="lc-sws">${swBig(cp.res)}</span><div><b>${elN(cp.res)}</b><span class="lc-sub">${L(ELEM[cp.res].colors)} · ${lang==='zh'?'生你的贵人色（最旺）':'nourishes you — strongest'}</span></div></div>
+    </div>
+    <div class="lc-box avoid"><div class="lc-bh bad">△ ${lang==='zh'?'少穿／别当主色':'Use sparingly'}</div>
+      <div class="lc-line"><span class="lc-sws">${swBig(cp.foe)}</span><div><b>${elN(cp.foe)}</b><span class="lc-sub">${L(ELEM[cp.foe].colors)} · ${lang==='zh'?'克你的颜色，会耗能':'drains your element'}</span></div></div>
+      <p class="lc-mini">${lang==='zh'?'偶尔点缀无妨，别让它成为全身主色，尤其在重要场合。':'A small accent is fine — just don’t let it become your main colour, especially on an important day.'}</p>
+    </div>
+  </div>`;
+  h+=`<div class="lc-wear-mat"><div class="lc-bh good">${lang==='zh'?'该戴什么（手链／配饰）':'What to wear on your wrist'}</div>
+    <p style="margin:7px 0 0;font-size:.88rem;color:var(--ink-soft)">${lang==='zh'?'选择':'Choose'} <b>${lang==='zh'?ELEM[self].zh:ELEM[self].en}</b> ${lang==='zh'?'或':'or'} <b>${lang==='zh'?ELEM[cp.res].zh:ELEM[cp.res].en}</b> ${lang==='zh'?'属性的配饰：':'accessories: '}${L(MATERIALS[self])} · ${L(MATERIALS[cp.res])}.</p>
+    <p style="margin:9px 0 0;font-size:.88rem;color:var(--bad)"><b>${lang==='zh'?'避免／减少':'Avoid / limit'}:</b> ${lang==='zh'?ELEM[cp.foe].zh+'属性的配饰':ELEM[cp.foe].en+' accessories'} — ${L(MATERIALS[cp.foe])}.</p></div>`;
+  const whens=lang==='zh'
+    ?['签约、成交、谈判——穿上本命色或贵人色，气场更稳、更有说服力','面试、见客户、第一次见面——用幸运色建立信任与好印象','重要演讲或上台——以旺色提气，减少克色','想低调、休养时——避免大面积克你的颜色']
+    :['Closing, signing or negotiating a deal — wear your own or nourishing colour to feel steady and persuasive','An interview, a pitch or a first meeting — lead with your lucky colours to build trust and a strong impression','A big talk or going on stage — wear your power colour, drop the draining one','When you want to rest and recover — avoid large blocks of your draining colour'];
+  h+=`<div class="lc-when"><div class="lc-bh">${lang==='zh'?'什么时候特别有用':'When it matters most'}</div><ul>${whens.map(x=>`<li>${x}</li>`).join("")}</ul></div>`;
+  h+=`<div class="lc-refwrap"><div class="lc-bh">${lang==='zh'?'五行颜色对照表':'Which colour represents which element'}</div>
+    <div class="lc-ref">${ELEM_ORDER.map(e=>`<div class="lc-refrow${e===self?' me':''}"><span class="lc-el" style="background:${ELEM[e].color}">${ELEM[e].zh}</span><span class="lc-sws">${swRow(e)}</span><span class="lc-elname">${ELEM[e].en} · ${L(ELEM[e].colors)}${e===self?` <b style="color:var(--crimson)">· ${lang==='zh'?'你':'you'}</b>`:''}</span></div>`).join("")}</div></div>`;
+  h+=`<p class="fame-note" style="margin-top:14px">${lang==='zh'?'颜色是辅助调能的方法之一，用于提升信心与气场，并非保证成败。':'Colour is one supportive way to shift your energy and confidence — not a guarantee of any outcome.'}</p>`;
+  h+=`</div>`;
+  return h;
+}
 function elementSection(r){
   const self=r.selfElem;
   const roleElem={self:self,gen:GENERATES[self],over:OVERCOMES[self],overme:overBy(self),genme:genBy(self)};
