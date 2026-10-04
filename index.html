@@ -302,6 +302,24 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 .numrep{font-size:.7rem;color:var(--ink-faint);font-style:italic;margin:1px 0 5px}
 .numcard p{font-size:.8rem;color:var(--ink-soft);margin:0;line-height:1.5}
 
+/* Famous core-number hall of fame */
+.fame-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:14px}
+.fame-card{display:flex;gap:13px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px;box-shadow:var(--shadow)}
+.fame-med{flex:none;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-disp);font-weight:700;font-size:1.75rem;color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.25);border:2px solid rgba(255,255,255,.25)}
+.fame-card.el-metal .fame-med{background:linear-gradient(135deg,#CBB270,#8C6E2E)}
+.fame-card.el-water .fame-med{background:linear-gradient(135deg,#5E9DD6,#2C6699)}
+.fame-card.el-fire  .fame-med{background:linear-gradient(135deg,#E27065,#BE3A2B)}
+.fame-card.el-wood  .fame-med{background:linear-gradient(135deg,#4EB585,#2C824F)}
+.fame-card.el-earth .fame-med{background:linear-gradient(135deg,#D0A45E,#A9762F)}
+.fame-body{min-width:0}
+.fame-title{font-family:var(--font-serif);font-weight:700;color:var(--ink);font-size:1rem}
+.fame-el{font-size:.7rem;color:var(--gold-deep);font-weight:600;margin-left:5px}
+.fame-person{margin-top:5px;font-size:.88rem;line-height:1.3}
+.fp-name{font-weight:700;color:var(--crimson)}
+.fp-role{font-size:.73rem;color:var(--ink-faint);display:block}
+.fame-why{font-size:.8rem;color:var(--ink-soft);margin:9px 0 0;line-height:1.5}
+.fame-note{font-size:.72rem;color:var(--ink-faint);text-align:center;margin-top:12px;line-height:1.5;max-width:70ch;margin-left:auto;margin-right:auto}
+
 /* simple triangle */
 .tri-explain{display:grid;grid-template-columns:1fr 1.2fr;gap:20px;align-items:center}
 @media(max-width:640px){.tri-explain{grid-template-columns:1fr}}
@@ -646,6 +664,29 @@ const NUM = {
     pos:{en:"Wishes come true easily; carries the traits of all numbers 1-8; abundant opportunities; stays focused to get results; earns recognition easily.",zh:"心想事成；兼具 1-8 所有数字的特质；机会多；专注便有成果；容易获得认可与赞赏。"},
     neg:{en:"Can be greedy with no principle; gives in too much to others; poor at clearing up miscommunication promptly, creating a vicious cycle.",zh:"可能贪心而无原则；对他人过度退让；不善于及时化解误会，形成恶性循环。"}}
 };
+
+/* Famous achievers by core number (computed with the app's own method; public birth dates) */
+const ELNAME={metal:{en:"Metal 金",zh:"金 Metal"},water:{en:"Water 水",zh:"水 Water"},fire:{en:"Fire 火",zh:"火 Fire"},wood:{en:"Wood 木",zh:"木 Wood"},earth:{en:"Earth 土",zh:"土 Earth"}};
+const FAMOUS=[
+ {n:1,el:"metal",people:[{en:"Steve Jobs",zh:"乔布斯",role:{en:"Apple founder",zh:"苹果创办人"},dob:"24 Feb 1955"},{en:"Walt Disney",zh:"华特·迪士尼",role:{en:"Disney founder",zh:"迪士尼创办人"},dob:"5 Dec 1901"}],
+   why:{en:"A born leader who turns bold vision into reality — confident, creative and uncompromising.",zh:"天生的领袖，把大胆愿景化为现实——自信、有创意、绝不妥协。"}},
+ {n:2,el:"water",people:[{en:"Li Ka-Shing",zh:"李嘉诚",role:{en:"Hong Kong tycoon",zh:"香港首富"},dob:"29 Jul 1928"}],
+   why:{en:"A master communicator and dealmaker — when he speaks, opportunity and helpers appear.",zh:"沟通与谈判高手——一开口，机会与贵人便出现。"}},
+ {n:3,el:"fire",people:[{en:"Jack Ma",zh:"马云",role:{en:"Alibaba founder",zh:"阿里巴巴创办人"},dob:"10 Sep 1964"},{en:"Jackie Chan",zh:"成龙",role:{en:"Film legend",zh:"功夫巨星"},dob:"7 Apr 1954"}],
+   why:{en:"Quick, expressive and decisive — seizes the moment and acts without hesitation.",zh:"思维快、善表达、果断——抓住时机，毫不犹豫地行动。"}},
+ {n:4,el:"wood",people:[{en:"Bill Gates",zh:"比尔·盖茨",role:{en:"Microsoft founder",zh:"微软创办人"},dob:"28 Oct 1955"}],
+   why:{en:"The planner-strategist — meticulous, research-driven, building systems that scale.",zh:"策划型的战略家——细致、重研究，打造可规模化的系统。"}},
+ {n:5,el:"earth",people:[{en:"Mark Zuckerberg",zh:"扎克伯格",role:{en:"Meta founder",zh:"Meta 创办人"},dob:"14 May 1984"}],
+   why:{en:"A navigator with clear direction — sees where the world is heading and leads others there.",zh:"方向明确的领航者——看清世界走向，并带领他人前行。"}},
+ {n:6,el:"metal",people:[{en:"Warren Buffett",zh:"巴菲特",role:{en:"Investor",zh:"投资大师"},dob:"30 Aug 1930"}],
+   why:{en:"Wisdom and a sixth sense for value — patient, principled, born with a 'money bag'.",zh:"智慧与价值的第六感——耐心、有原则，天生带财库。"}},
+ {n:7,el:"water",people:[{en:"Elon Musk",zh:"马斯克",role:{en:"Tesla & SpaceX",zh:"特斯拉 / SpaceX"},dob:"28 Jun 1971"},{en:"Taylor Swift",zh:"泰勒·斯威夫特",role:{en:"Global superstar",zh:"全球巨星"},dob:"13 Dec 1989"}],
+   why:{en:"Insight and remarkable luck — vast reach and networks that pull opportunity toward them.",zh:"洞察力强、运气极佳——影响力与人脉广，把机会吸引而来。"}},
+ {n:8,el:"fire",people:[{en:"Nelson Mandela",zh:"曼德拉",role:{en:"Statesman",zh:"南非领袖"},dob:"18 Jul 1918"}],
+   why:{en:"Responsibility and sacrifice — carried a nation's burden and withstood pressure for others.",zh:"责任与牺牲——肩负国家重担，为他人承受巨大压力。"}},
+ {n:9,el:"wood",people:[{en:"Mahatma Gandhi",zh:"甘地",role:{en:"Leader",zh:"印度圣雄"},dob:"2 Oct 1869"},{en:"Mother Teresa",zh:"德兰修女",role:{en:"Humanitarian",zh:"人道主义者"},dob:"26 Aug 1910"}],
+   why:{en:"Completion and quiet power — focus and conviction that moved millions; wishes made real.",zh:"圆满与静水深流——专注与信念感动千万人；心想事成。"}}
+];
 
 /* ============ Destiny numbers (天命数字) — Shuyi 2 slide 1 ============ */
 const DESTINY = {
@@ -1102,6 +1143,10 @@ function renderPublic(){
   h+=`<section class="block"><div class="sec-head"><div class="n">9</div><div><h2>${L(UI.nineNumbers)}</h2><p>${L(UI.nineNumbersSub)}</p></div></div>
       <div class="numgrid">${[1,2,3,4,5,6,7,8,9].map(n=>{const d=NUM[n];return `<div class="numcard"><div class="numimg"><img src="${d.img}" alt="${L(d.title)}" loading="lazy"></div><div class="numbody"><div class="numh"><span class="numn">${n}</span><span class="numt">${L(d.title)}</span></div><div class="numrep">${esc(d.rep.split('·')[0].split('“')[0].trim())}</div><p>${L(d.pos)}</p></div></div>`;}).join("")}</div>
       <p style="font-size:.78rem;color:var(--ink-faint);text-align:center;margin-top:12px">${L(UI.learnMoreNums)}</p></section>`;
+  // Famous core numbers (hall of fame)
+  h+=`<section class="block"><div class="sec-head"><div class="n">★</div><div><h2>${lang==='zh'?'名人核心数字':'Famous Core Numbers'}<span class="en">${lang==='zh'?'Hall of Fame':'名人堂'}</span></h2><p>${lang==='zh'?'世界名人与你共享同一个核心数字——用本应用相同的方法，从他们公开的生日推算。':"World-famous achievers who share each core number — worked out from their public birth dates with this app's own method."}</p></div></div>
+      <div class="fame-grid">${FAMOUS.map(f=>`<div class="fame-card el-${f.el}"><div class="fame-med">${f.n}</div><div class="fame-body"><div class="fame-title">${L(NUM[f.n].title)}<span class="fame-el">${L(ELNAME[f.el])}</span></div>${f.people.map(p=>`<div class="fame-person"><span class="fp-name">${lang==='zh'?p.zh:p.en}</span><span class="fp-role">${L(p.role)} · ${p.dob}</span></div>`).join("")}<p class="fame-why">${L(f.why)}</p></div></div>`).join("")}</div>
+      <p class="fame-note">${lang==='zh'?'仅供文化参考与启发；以上人物与本服务并无关联，亦未代言。想验证？在管理页输入任一生日，便会得到相同的核心数字。':"For cultural interest and inspiration only — these figures are independent and not affiliated with this reading. Want to verify? Enter any of these birthdays in the admin page and you'll get the same core number."}</p></section>`;
   // Simple triangle
   h+=`<section class="block"><div class="sec-head"><div class="n">▽</div><div><h2>${L(UI.simpleTri)}</h2><p>${L(UI.simpleTriSub)}</p></div></div>
       <div class="card"><div class="tri-explain">
