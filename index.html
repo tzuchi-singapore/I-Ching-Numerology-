@@ -243,18 +243,27 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 :root[data-lang="zh"] .en-only{display:none}
 @media print{
   @page{margin:11mm}
-  header.top,.hero,#publicView,.inputcard,.calcbtn,.cycle-picker,.no-print,.adminbar{display:none!important}
-  html,body{background:#fff!important;color:#000!important}
+  /* The saved report always prints on clean light paper, whatever theme is on screen */
+  :root,:root[data-theme="dark"],:root[data-theme="light"],:root:not([data-theme="light"]){
+    --bg:#ffffff;--bg2:#f4edde;--surface:#fffdf8;--surface2:#f5eede;--ink:#20180d;--ink-soft:#4b3d27;--ink-faint:#7c6c50;--line:#d9caa6;--line-soft:#e8dcc2;
+    --gold:#8a6410;--gold-br:#a9801f;--gold-deep:#6f540f;--crimson:#9a2017;--crimson-soft:#b23a2e;
+    --good:#2c7d4b;--warn:#8a6410;--bad:#b23327;
+    --metal:#8a6c2e;--water:#245f90;--fire:#b23327;--wood:#2c7d4b;--earth:#9a6a1f;
+    --shadow:none;--shadow-lg:none;
+  }
+  header.top,.hero,#publicView,.inputcard,.calcbtn,.cycle-picker,.no-print,.adminbar,.summaryhead,.summary{display:none!important}
+  html,body{background:#fff!important;color:var(--ink)!important}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .wrap{max-width:100%!important;padding-inline:0!important}
   main{padding-block:0!important}
   section.block{margin-top:14px;break-inside:auto}
   .sec-head{break-after:avoid;break-inside:avoid}
-  h2,h3,h4{break-after:avoid}
+  h2,h3,h4,.lc-bh,.lc-h,.fame-title{break-after:avoid}
   /* stack every multi-column grid so nothing sits side-by-side across a break */
-  .grid,.g2,.g3,.summary,.union-grid,.numgrid,.cyc-mini,.starwrap,.tri-explain{display:block!important;grid-template-columns:none!important}
+  .grid,.g2,.g3,.union-grid,.numgrid,.cyc-mini,.starwrap,.tri-explain,.lc-two{display:block!important;grid-template-columns:none!important}
   /* atomic blocks that must never be split across pages */
-  .grid>.card,.tile,.combo,.union,.relnote,.corecard,.numcard,.cyc-mini .m,.legend13 .r,.eltable tr,.contact-card{break-inside:avoid;page-break-inside:avoid}
+  .grid>.card,.tile,.combo,.union,.relnote,.corecard,.numcard,.cyc-mini .m,.legend13 .r,.eltable tr,.contact-card,.lc-box,.lc-wear-mat,.lc-when,.lc-refwrap,.lc-refrow,.fame-card,.calc-card{break-inside:avoid;page-break-inside:avoid}
+  .lc-box{margin-bottom:12px}
   .card{box-shadow:none!important}
   .grid>.card,.tile,.combo,.union,.relnote,.corecard,.numcard{margin-bottom:12px}
   svg,img{break-inside:avoid;page-break-inside:avoid}
@@ -262,7 +271,7 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   .cyc-mini .m{margin-bottom:10px}
   /* keep image-heavy cards short enough to fit one page (this was the remaining cut-off) */
   body{font-size:12px}
-  .corecard .imgwrap{max-width:200px;margin:0 auto 8px}
+  .corecard .imgwrap{max-width:150px;margin:0 auto 8px}
   .numcard .numimg{width:70px;height:52px}
   .starwrap svg{max-height:300px}
   .card{padding:14px}
@@ -273,8 +282,9 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
   .cover{max-width:100%!important;width:100%!important;margin:0!important;break-after:page;page-break-after:always;break-inside:avoid;page-break-inside:avoid}
   .cover-frame{box-shadow:none!important;padding:2mm}
   .cover-inner{height:173mm!important;min-height:0!important;max-height:173mm!important;overflow:hidden!important;padding:0 10mm 8mm!important;justify-content:flex-start}
-  .cover-banner{width:calc(100% + 20mm)!important;margin:0 -10mm 5mm!important}
-  .cover-banner img{height:40mm!important}
+  .cover-banner{width:calc(100% + 20mm)!important;margin:0 -10mm 4mm!important}
+  .cover-banner img{height:48mm!important}
+  .cover-banner-fade{height:10mm!important}
   .cover-eyebrow{font-size:7pt!important;margin-top:1mm}
   .cover-zh{font-size:26pt!important;letter-spacing:.08em;margin-top:3mm}
   .cover-en{font-size:11pt!important;margin-top:3px}
@@ -1541,7 +1551,7 @@ function render(){
   h+=coverPage(r);
 
   /* --- Summary --- */
-  h+=`<div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px">
+  h+=`<div class="summaryhead" style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-top:22px">
     <div><div style="font-family:var(--font-serif);font-size:1.4rem;color:var(--ink);font-weight:700">${L(UI.yourChart)}</div>
     <div style="color:var(--ink-faint);font-size:.85rem" class="tnum">${lang==='zh'?'生日':'Born'} ${dobStr}</div></div>
     <button class="iconbtn no-print" id="recalcBtn">${L(UI.recalc)}</button></div>`;
