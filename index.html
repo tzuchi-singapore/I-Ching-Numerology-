@@ -251,7 +251,7 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
     --metal:#8a6c2e;--water:#245f90;--fire:#b23327;--wood:#2c7d4b;--earth:#9a6a1f;
     --shadow:none;--shadow-lg:none;
   }
-  header.top,.hero,#publicView,.inputcard,.calcbtn,.cycle-picker,.no-print,.adminbar,.summaryhead,.summary{display:none!important}
+  header.top,.hero,#publicView,.inputcard,.calcbtn,.cycle-picker,.no-print,.adminbar,.summaryhead,.summary,#auspWrap{display:none!important}
   html,body{background:#fff!important;color:var(--ink)!important}
   *{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important}
   .wrap{max-width:100%!important;padding-inline:0!important}
@@ -385,6 +385,43 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 .calc-closed .cc-h{font-family:var(--font-serif);font-weight:700;color:var(--crimson);font-size:1.05rem;margin-top:6px}
 .calc-closed .cc-why{font-size:.86rem;color:var(--ink-soft);margin:10px auto 0;max-width:52ch;line-height:1.6}
 .calc-closed .cc-now{font-size:.82rem;color:var(--gold-deep);font-weight:600;margin:12px 0 0}
+/* ===== Auspicious Date Finder ===== */
+.ausp-range{display:flex;align-items:flex-end;gap:12px;flex-wrap:wrap}
+.ar-field{flex:1 1 180px;min-width:160px}
+.ar-field>label{display:block;font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin-bottom:5px}
+.ar-selects{display:flex;gap:8px}
+.ar-selects select{flex:1;background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:10px;padding:10px 10px;font-size:.95rem;font-family:var(--font-body)}
+.ar-selects select:focus{outline:2px solid var(--gold);border-color:var(--gold)}
+.ar-arrow{color:var(--gold-deep);font-size:1.2rem;padding-bottom:10px}
+@media(max-width:560px){.ar-arrow{display:none}}
+.ausp-evlabel{font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);font-weight:700;margin:16px 0 8px}
+.ausp-events{display:flex;flex-wrap:wrap;gap:8px}
+.au-chip{display:inline-flex;align-items:center;gap:7px;font-size:.86rem;color:var(--ink);cursor:pointer;background:var(--surface2);border:1px solid var(--line);border-radius:22px;padding:8px 13px;transition:.15s}
+.au-chip:hover{border-color:var(--gold)}
+.au-chip input{position:absolute;opacity:0;width:0;height:0}
+.au-chip span{display:inline-flex;align-items:center;gap:6px}
+.au-chip:has(input:checked){border-color:var(--gold-deep);background:color-mix(in srgb,var(--gold) 16%,var(--surface2));color:var(--gold-deep);font-weight:700}
+.au-chip:has(input:focus-visible){outline:2px solid var(--gold);outline-offset:2px}
+.ausp-card .calcbtn{margin-top:16px}
+.ausp-hint{font-size:.76rem;color:var(--ink-faint);text-align:center;margin:10px 2px 0;line-height:1.5}
+#auResult{margin-top:4px}
+.au-group{margin-top:18px;padding-top:14px;border-top:1px solid var(--line)}
+.au-gh{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+.au-gic{font-size:1.3rem}
+.au-gt{font-family:var(--font-serif);font-weight:700;font-size:1.1rem;color:var(--crimson)}
+.au-date{display:flex;gap:12px;align-items:flex-start;background:var(--surface2);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin-bottom:10px}
+.au-rank{flex:none;font-family:var(--font-disp);font-weight:700;color:var(--gold-deep);font-size:.9rem;background:color-mix(in srgb,var(--gold) 16%,var(--surface));border:1px solid var(--line);border-radius:8px;width:34px;height:34px;display:grid;place-items:center;margin-top:2px}
+.au-dmain{min-width:0;flex:1}
+.au-dday{font-family:var(--font-serif);font-weight:700;color:var(--ink);font-size:1rem}
+.au-chiprow{display:flex;gap:6px;flex-wrap:wrap;margin:5px 0 2px}
+.au-off{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:linear-gradient(135deg,var(--gold-br),var(--gold-deep));border-radius:20px;padding:3px 9px}
+.au-fav{font-size:.68rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;color:var(--good);background:color-mix(in srgb,var(--good) 16%,transparent);border-radius:20px;padding:3px 9px}
+.au-why{font-size:.84rem;color:var(--ink-soft);margin:4px 0 0;line-height:1.55}
+.au-why b{color:var(--ink)}
+.au-clash{color:var(--ink-faint)}
+.au-none{font-size:.84rem;color:var(--ink-faint);font-style:italic;margin:4px 0 0}
+.au-method{font-size:.76rem;color:var(--ink-faint);line-height:1.6;margin:18px 0 0;padding-top:12px;border-top:1px solid var(--line)}
+.au-method b{color:var(--ink-soft)}
 
 /* public free calculator */
 .calc-card{text-align:center}
@@ -646,6 +683,7 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
       <p class="note-etiq" data-t="etiquette">Shuyi etiquette: compute between 7am–9pm · use only blue or black pen · do not compute for the deceased · avoid the 3 days before &amp; after Qing Ming / Hungry Ghost Festival.</p>
     </div>
     <div id="results"></div>
+    <section id="auspWrap" class="block"></section>
     <section id="nameLabWrap" class="block" hidden>
       <div class="sec-head"><div class="n">姓</div><div><h2>Name Analysis <span style="font-family:var(--font-serif);color:var(--gold-deep);font-size:.7em">姓名诊断</span></h2><p data-t="nlSub">From the name &amp; gender you entered above — based on your birthday's zodiac &amp; five grids</p></div></div>
       <div class="card"><h3 style="color:var(--crimson);font-size:1.1rem;margin-bottom:10px">Name Check 姓名诊断</h3><div id="nlCheck"></div></div>
@@ -1323,6 +1361,153 @@ function runPublicCalc(){
     <div class="calc-cta"><p class="cta-copy">${ctaCopy}</p><a class="wa-btn" href="${wa}" target="_blank" rel="noopener">${ic}${btnText}</a><p class="cta-sub">${subText}</p></div></div>`;
   try{res.querySelector(".calc-out").scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
 }
+
+/* ================= Auspicious Date Finder (择日) =================
+   Deterministic engine using three classical, self-contained signals:
+   1) 建除十二神 — the 12 Day Officers, derived from the day & month earthly
+      branches (month branch from the solar terms / 节).
+   2) 六冲 — the day's clash animal, from the 60-day stem-branch cycle.
+   3) The app's own Shuyi day-energy number & element.
+   No lunar-calendar lookup or internet needed. */
+function _jdn(y,m,day){const a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return day+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045;}
+function dayBranchIdx(dt){const i=((_jdn(dt.getFullYear(),dt.getMonth()+1,dt.getDate())+49)%60+60)%60;return i%12;} // 0=子
+const _TERMDAY=[0,6,4,6,5,6,6,7,8,8,8,7,7];   // Gregorian month -> approx day the solar-term month begins
+const _TERMBR =[0,1,2,3,4,5,6,7,8,9,10,11,0]; // branch that begins that month (Jan->丑 ... Dec->子)
+function monthBranchIdx(dt){let m=dt.getMonth()+1;if(dt.getDate()<_TERMDAY[m]){m--;if(m<1)m=12;}return _TERMBR[m];}
+function officerIdx(dt){return ((dayBranchIdx(dt)-monthBranchIdx(dt))%12+12)%12;} // 0=建
+const OFFICERS=[{zh:"建",en:"Establish"},{zh:"除",en:"Remove"},{zh:"满",en:"Full"},{zh:"平",en:"Balance"},{zh:"定",en:"Stable"},{zh:"执",en:"Hold"},{zh:"破",en:"Break"},{zh:"危",en:"Danger"},{zh:"成",en:"Success"},{zh:"收",en:"Receive"},{zh:"开",en:"Open"},{zh:"闭",en:"Close"}];
+const OFFICER_GOOD={
+ 0:{en:"an ‘Establish’ day — vigorous beginning energy",zh:"建日 — 生发之气，宜创始"},
+ 1:{en:"a ‘Remove’ day — clears away the old",zh:"除日 — 除旧布新"},
+ 2:{en:"a ‘Full’ day — fullness & abundance, good for wealth and markets",zh:"满日 — 圆满丰盈，宜纳财开市"},
+ 3:{en:"a ‘Balance’ day — even and steady",zh:"平日 — 平稳中和"},
+ 4:{en:"a ‘Settle’ day — steady and binding, ideal for commitments",zh:"定日 — 安稳笃定，宜缔结签立"},
+ 5:{en:"a ‘Hold’ day — a firm grip, good for building & securing",zh:"执日 — 执守稳固，宜营造"},
+ 8:{en:"a ‘Success’ day — among the most auspicious, things come to fruition",zh:"成日 — 诸事圆满，大吉之日"},
+ 9:{en:"a ‘Receive’ day — good for gathering, receiving & collecting",zh:"收日 — 宜纳、宜收、宜进"},
+ 10:{en:"an ‘Open’ day — doors open, great for beginnings",zh:"开日 — 开通顺遂，宜开端"}
+};
+// officer suitability per event, order [建,除,满,平,定,执,破,危,成,收,开,闭]; -99 = forbidden
+const AU_EVENTS=[
+ {k:"wedding", ic:"💍", zh:"结婚 嫁娶", en:"Wedding",        fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,1,3,-9], why:{en:"settling a lifelong union",zh:"缔结良缘、白头偕老"}},
+ {k:"engage",  ic:"💐", zh:"订婚 文定", en:"Engagement",     fav:[1,6,8,9], sc:[1,0,2,1,3,2,-99,-9,3,2,3,-2], why:{en:"a formal betrothal",zh:"文定纳采"}},
+ {k:"buyhouse",ic:"🏠", zh:"买房 置业", en:"Buy Property",   fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,3,2,-2], why:{en:"acquiring a property",zh:"置产安居"}},
+ {k:"movein",  ic:"📦", zh:"入宅 乔迁", en:"Move In",        fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,3,3,-9], why:{en:"moving into a new home",zh:"入伙乔迁"}},
+ {k:"keys",    ic:"🔑", zh:"收锁匙 交屋", en:"Collect Keys",  fav:[1,6,8,9], sc:[1,0,1,1,2,1,-99,-9,3,3,3,-2], why:{en:"the handover / receiving keys",zh:"领钥匙、交屋"}},
+ {k:"reno",    ic:"🔨", zh:"动土 装修", en:"Renovation",     fav:[1,6,8,9], sc:[0,1,1,1,3,3,-99,-9,3,1,1,-1], why:{en:"groundbreaking & renovation",zh:"动土修造"}},
+ {k:"sign",    ic:"✍️", zh:"签约 立券", en:"Sign Contract",  fav:[1,6,8,9], sc:[1,1,2,1,3,2,-99,-9,3,3,3,-2], why:{en:"signing & sealing an agreement",zh:"签约立券交易"}},
+ {k:"invest",  ic:"📈", zh:"投资 纳财", en:"Investment",     fav:[1,6,8,9], sc:[1,0,3,1,2,2,-99,-9,3,3,2,-2], why:{en:"putting money to work",zh:"投资纳财"}},
+ {k:"business",ic:"🏪", zh:"开业 开市", en:"Start Business", fav:[1,6,8,9], sc:[1,1,3,1,2,1,-99,-9,3,3,3,-9], why:{en:"launching a business",zh:"开业开市"}},
+ {k:"opening", ic:"🎊", zh:"开张 开光", en:"Grand Opening",  fav:[1,6,8,9], sc:[1,0,3,1,2,1,-99,-9,3,2,3,-9], why:{en:"a grand opening ceremony",zh:"开张开光庆典"}},
+ {k:"hire",    ic:"🤝", zh:"招聘 纳人", en:"Hiring",         fav:[1,6,8,9], sc:[2,1,2,1,3,2,-99,-6,3,2,3,-1], why:{en:"taking on new people",zh:"招聘纳人"}},
+ {k:"travel",  ic:"✈️", zh:"出行 远行", en:"Travel",         fav:[1,6,8,9], sc:[2,2,1,1,-3,1,-99,-9,3,1,3,-2], why:{en:"a major journey or relocation",zh:"出行、远行、移徙"}}
+];
+function dateEnergy(dt){let s=String(dt.getDate())+String(dt.getMonth()+1)+String(dt.getFullYear()),sum=0;for(const c of s)sum+=+c;let n=reduce(sum);return n||9;}
+function clientBranch(){ if(typeof last!=='undefined'&&last&&last.zodiac){const i=ZODIAC.findIndex(z=>z.k===last.zodiac.k);return i<0?null:i;} return null; }
+const _WD={en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],zh:["日","一","二","三","四","五","六"]};
+const _MON={en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],zh:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]};
+function fmtDate(dt){const wd=lang==='zh'?('周'+_WD.zh[dt.getDay()]):_WD.en[dt.getDay()];const mo=_MON[lang==='zh'?'zh':'en'][dt.getMonth()];return lang==='zh'?`${dt.getFullYear()}年${dt.getMonth()+1}月${dt.getDate()}日 ${wd}`:`${wd}, ${dt.getDate()} ${mo} ${dt.getFullYear()}`;}
+function auScore(dt,ev){
+  const of=officerIdx(dt), base=ev.sc[of];
+  if(base<=0) return null;                       // not suitable (incl. 破 -99, 危, 闭)
+  const cb=(dayBranchIdx(dt)+6)%12;              // the day's clash branch
+  const mine=clientBranch();
+  if(mine!=null && cb===mine) return null;        // clashes the person's zodiac -> drop
+  const n=dateEnergy(dt);
+  let s=base*10;
+  if(ev.fav.indexOf(n)>=0) s+=2.5;               // favourable Shuyi day-energy
+  if(mine!=null) s+=3;                           // confirmed not clashing the host
+  return {score:s, officer:of, n:n, clashBranch:cb};
+}
+function findAuspicious(fromDt,toDt,ev,maxPick){
+  const today=new Date(); today.setHours(0,0,0,0);
+  const cand=[];
+  for(let d=new Date(fromDt); d<=toDt; d.setDate(d.getDate()+1)){
+    if(d<today) continue;
+    const r=auScore(new Date(d),ev); if(r) cand.push(Object.assign({dt:new Date(d)},r));
+  }
+  cand.sort((a,b)=> b.score-a.score || a.dt-b.dt);
+  const picked=[];
+  for(const c of cand){ if(picked.length>=maxPick)break; if(picked.every(p=>Math.abs((p.dt-c.dt)/864e5)>=4)) picked.push(c); }
+  for(const c of cand){ if(picked.length>=maxPick)break; if(!picked.includes(c)) picked.push(c); }
+  picked.sort((a,b)=>a.dt-b.dt);
+  return picked;
+}
+function renderAusp(){
+  const W=document.getElementById("auspWrap"); if(!W) return;
+  const gv=id=>{const e=document.getElementById(id);return e?e.value:null;};
+  const prevEv=[...document.querySelectorAll('.au-ev:checked')].map(c=>c.value);
+  const now=new Date(), cy=now.getFullYear();
+  const years=[cy,cy+1,cy+2];
+  const defFM=gv("auFromM")||String(now.getMonth()+1), defFY=gv("auFromY")||String(cy);
+  let toM=now.getMonth()+3, toY=cy; if(toM>12){toM-=12;toY++;}
+  const defTM=gv("auToM")||String(toM), defTY=gv("auToY")||String(toY);
+  const mOpt=(sel)=>_MON[lang==='zh'?'zh':'en'].map((mo,i)=>`<option value="${i+1}" ${String(i+1)===String(sel)?'selected':''}>${mo}</option>`).join("");
+  const yOpt=(sel)=>years.map(y=>`<option value="${y}" ${String(y)===String(sel)?'selected':''}>${y}</option>`).join("");
+  const evDef=prevEv.length?prevEv:["wedding","business"];
+  const evBoxes=AU_EVENTS.map(e=>`<label class="au-chip"><input type="checkbox" class="au-ev" value="${e.k}" ${evDef.indexOf(e.k)>=0?'checked':''}><span>${e.ic} ${lang==='zh'?e.zh:e.en}</span></label>`).join("");
+  const cb=clientBranch();
+  const hostNote = cb!=null
+    ? (lang==='zh'?`已避开与命主生肖（${last.zodiac.emo}${last.zodiac.zh}）相冲之日。`:`Dates that clash the person's zodiac (${last.zodiac.emo} ${last.zodiac.en}) are removed.`)
+    : (lang==='zh'?`提示：先在上方输入某人的生日，还可自动避开与其生肖相冲之日。`:`Tip: calculate a birthday above and clashing days for that person are removed too.`);
+  W.innerHTML=`<div class="sec-head"><div class="n">吉</div><div><h2>${lang==='zh'?'择日 · 黄道吉日':'Auspicious Date Finder'}<span class="en">${lang==='zh'?'Auspicious Dates':'择日'}</span></h2><p>${lang==='zh'?'选择月份范围与要办的大事，为每项给出 3 个吉日并说明理由。':'Pick a month range and the big days you’re planning — get 3 recommended dates each, with reasons.'}</p></div></div>
+    <div class="card ausp-card">
+      <div class="ausp-range">
+        <div class="ar-field"><label>${lang==='zh'?'从':'From'}</label><div class="ar-selects"><select id="auFromM">${mOpt(defFM)}</select><select id="auFromY">${yOpt(defFY)}</select></div></div>
+        <div class="ar-arrow">→</div>
+        <div class="ar-field"><label>${lang==='zh'?'至':'To'}</label><div class="ar-selects"><select id="auToM">${mOpt(defTM)}</select><select id="auToY">${yOpt(defTY)}</select></div></div>
+      </div>
+      <div class="ausp-evlabel">${lang==='zh'?'选择大事（可多选）':'Choose your big days (tick any)'}</div>
+      <div class="ausp-events">${evBoxes}</div>
+      <button class="calcbtn" id="auGo">${lang==='zh'?'查找吉日 ✦':'Find Auspicious Dates ✦'}</button>
+      <p class="ausp-hint">${hostNote}</p>
+      <div class="calc-err hide" id="auErr"></div>
+      <div id="auResult"></div>
+    </div>`;
+  const go=document.getElementById("auGo"); if(go) go.addEventListener("click",runAuspicious);
+}
+function runAuspicious(){
+  const err=document.getElementById("auErr"), out=document.getElementById("auResult");
+  const fm=+document.getElementById("auFromM").value, fy=+document.getElementById("auFromY").value;
+  const tm=+document.getElementById("auToM").value, ty=+document.getElementById("auToY").value;
+  const evs=[...document.querySelectorAll('.au-ev:checked')].map(c=>c.value);
+  const fail=m=>{err.textContent=m;err.classList.remove("hide");out.innerHTML="";};
+  if(!evs.length){ fail(lang==='zh'?'请至少选择一项大事。':'Please tick at least one big day.'); return; }
+  let fromDt=new Date(fy,fm-1,1), toDt=new Date(ty,tm,0); // last day of To month
+  if(toDt<fromDt){ fail(lang==='zh'?'结束月份不能早于开始月份。':'The ending month cannot be before the starting month.'); return; }
+  const maxEnd=new Date(fromDt); maxEnd.setMonth(maxEnd.getMonth()+6); maxEnd.setDate(0);
+  let capped=false; if(toDt>maxEnd){ toDt=maxEnd; capped=true; }
+  err.classList.add("hide");
+  const order=AU_EVENTS.filter(e=>evs.indexOf(e.k)>=0);
+  let h="";
+  for(const ev of order){
+    const picks=findAuspicious(fromDt,toDt,ev,3);
+    h+=`<div class="au-group"><div class="au-gh"><span class="au-gic">${ev.ic}</span><span class="au-gt">${lang==='zh'?ev.zh:ev.en}</span></div>`;
+    if(!picks.length){ h+=`<p class="au-none">${lang==='zh'?'此范围内未找到明显吉日，请扩大月份范围。':'No clearly auspicious date in this range — try widening the months.'}</p>`; }
+    else { h+=picks.map((p,i)=>{
+      const of=OFFICERS[p.officer], og=OFFICER_GOOD[p.officer]||{en:of.en,zh:of.zh};
+      const clashZ=ZODIAC[p.clashBranch];
+      const cb=clientBranch();
+      const clashLine = lang==='zh'
+        ? `当日冲${clashZ.zh}${clashZ.emo}${cb!=null?'（非命主生肖）':''}`
+        : `Clashes the ${clashZ.en} ${clashZ.emo}${cb!=null?' (not the person’s sign)':''}`;
+      const favMatch = ev.fav.indexOf(p.n)>=0;
+      const en=ELEM_OF_NUM[p.n], elName=lang==='zh'?ELEM[en].zh:ELEM[en].en;
+      return `<div class="au-date"><div class="au-rank">#${i+1}</div><div class="au-dmain">
+        <div class="au-dday">${fmtDate(p.dt)}</div>
+        <div class="au-chiprow"><span class="au-off">${of.zh} ${of.en}</span>${favMatch?`<span class="au-fav">${lang==='zh'?'能量旺':'strong energy'}</span>`:''}</div>
+        <p class="au-why">${lang==='zh'?`宜${ev.why.zh}：${og.zh}。`:`Good for ${ev.why.en}: ${og.en}.`} ${lang==='zh'?`当日数字能量 <b>${p.n} · ${L(NUM[p.n].title)}（${elName}）</b>${favMatch?'，为此事的旺数':''}。`:`Day energy <b>${p.n} · ${L(NUM[p.n].title)} (${elName})</b>${favMatch?', a strong number for this':''}.`} <span class="au-clash">${clashLine}。</span></p>
+      </div></div>`;
+    }).join(""); }
+    h+=`</div>`;
+  }
+  const noteCap = capped?(lang==='zh'?'（范围较大，已显示前 6 个月。）':'(Range was large — showing the first 6 months.)'):'';
+  h+=`<p class="au-method">${lang==='zh'
+    ? `择日依据：<b>建除十二神</b>（由节气定月建）、当日 <b>六冲</b> 与本应用的 <b>数字能量</b>综合挑选。婚嫁、签约等大事，建议再以双方完整命盘核对，并另择<b>吉时</b>。${noteCap}`
+    : `Method: this shortlist combines the <b>12 Day Officers (建除)</b> (month set by the solar terms), the day’s <b>six-clash (六冲)</b> and this app’s <b>Shuyi day-energy</b>. For a wedding or a major signing, confirm the final pick against both parties’ full charts, and choose an auspicious <b>hour (吉时)</b> separately. ${noteCap}`}</p>`;
+  out.innerHTML=h;
+  try{out.scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
+}
 function renderPublic(){
   const V=document.getElementById("publicView"); if(!V)return;
   let h="";
@@ -1462,7 +1647,7 @@ function initElemFx(){
   }
   frame();
 }
-function renderAll(){ root.setAttribute("data-lang",lang); renderPublic(); render(); }
+function renderAll(){ root.setAttribute("data-lang",lang); renderPublic(); render(); renderAusp(); }
 
 /* ============ COVER PAGE (你的人生命盘) ============ */
 function baguaSVG(p){
@@ -1934,6 +2119,7 @@ function doCalc(){
   last=compute(d,m,y);
   last.name=(document.getElementById("inName").value||"").trim();
   render();
+  renderAusp();
   const nlw=document.getElementById("nameLabWrap");
   if(nlw){ nlw.hidden=false; const iso=`${y}-${String(m).padStart(2,'0')}-${String(d).padStart(2,'0')}`; const gsel=document.querySelector("input[name=nlSex]:checked"); const gv=gsel?gsel.value:"M"; if(window.NameLab){ window.NameLab.refresh(iso,last.name,gv); } }
   setTimeout(()=>{document.getElementById("results").scrollIntoView({behavior:"smooth",block:"start"});},80);
