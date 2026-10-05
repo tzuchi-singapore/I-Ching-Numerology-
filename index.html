@@ -1365,9 +1365,10 @@ function runPublicCalc(){
 /* ================= Auspicious Date Finder (择日) =================
    Deterministic engine using three classical, self-contained signals:
    1) 建除十二神 — the 12 Day Officers, derived from the day & month earthly
-      branches (month branch from the solar terms / 节).
+      branches (month branch from the solar terms / 节). Primary signal.
    2) 六冲 — the day's clash animal, from the 60-day stem-branch cycle.
-   3) The app's own Shuyi day-energy number & element.
+   3) 八星磁场 — the number-energy field of the date's day-number (two digits),
+      favouring 天医/延年/生气/伏位 and avoiding 六煞(e.g. 38/16)/绝命/祸害/五鬼.
    No lunar-calendar lookup or internet needed. */
 function _jdn(y,m,day){const a=Math.floor((14-m)/12),yy=y+4800-a,mm=m+12*a-3;return day+Math.floor((153*mm+2)/5)+365*yy+Math.floor(yy/4)-Math.floor(yy/100)+Math.floor(yy/400)-32045;}
 function dayBranchIdx(dt){const i=((_jdn(dt.getFullYear(),dt.getMonth()+1,dt.getDate())+49)%60+60)%60;return i%12;} // 0=子
@@ -1388,36 +1389,51 @@ const OFFICER_GOOD={
  10:{en:"an ‘Open’ day — doors open, great for beginnings",zh:"开日 — 开通顺遂，宜开端"}
 };
 // officer suitability per event, order [建,除,满,平,定,执,破,危,成,收,开,闭]; -99 = forbidden
+// pref = the number-energy field(s) that best suit this event (extra weight when the date-number matches)
 const AU_EVENTS=[
- {k:"wedding", ic:"💍", zh:"结婚 嫁娶", en:"Wedding",        fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,1,3,-9], why:{en:"settling a lifelong union",zh:"缔结良缘、白头偕老"}},
- {k:"engage",  ic:"💐", zh:"订婚 文定", en:"Engagement",     fav:[1,6,8,9], sc:[1,0,2,1,3,2,-99,-9,3,2,3,-2], why:{en:"a formal betrothal",zh:"文定纳采"}},
- {k:"buyhouse",ic:"🏠", zh:"买房 置业", en:"Buy Property",   fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,3,2,-2], why:{en:"acquiring a property",zh:"置产安居"}},
- {k:"movein",  ic:"📦", zh:"入宅 乔迁", en:"Move In",        fav:[1,6,8,9], sc:[1,0,2,1,3,1,-99,-9,3,3,3,-9], why:{en:"moving into a new home",zh:"入伙乔迁"}},
- {k:"keys",    ic:"🔑", zh:"收锁匙 交屋", en:"Collect Keys",  fav:[1,6,8,9], sc:[1,0,1,1,2,1,-99,-9,3,3,3,-2], why:{en:"the handover / receiving keys",zh:"领钥匙、交屋"}},
- {k:"reno",    ic:"🔨", zh:"动土 装修", en:"Renovation",     fav:[1,6,8,9], sc:[0,1,1,1,3,3,-99,-9,3,1,1,-1], why:{en:"groundbreaking & renovation",zh:"动土修造"}},
- {k:"sign",    ic:"✍️", zh:"签约 立券", en:"Sign Contract",  fav:[1,6,8,9], sc:[1,1,2,1,3,2,-99,-9,3,3,3,-2], why:{en:"signing & sealing an agreement",zh:"签约立券交易"}},
- {k:"invest",  ic:"📈", zh:"投资 纳财", en:"Investment",     fav:[1,6,8,9], sc:[1,0,3,1,2,2,-99,-9,3,3,2,-2], why:{en:"putting money to work",zh:"投资纳财"}},
- {k:"business",ic:"🏪", zh:"开业 开市", en:"Start Business", fav:[1,6,8,9], sc:[1,1,3,1,2,1,-99,-9,3,3,3,-9], why:{en:"launching a business",zh:"开业开市"}},
- {k:"opening", ic:"🎊", zh:"开张 开光", en:"Grand Opening",  fav:[1,6,8,9], sc:[1,0,3,1,2,1,-99,-9,3,2,3,-9], why:{en:"a grand opening ceremony",zh:"开张开光庆典"}},
- {k:"hire",    ic:"🤝", zh:"招聘 纳人", en:"Hiring",         fav:[1,6,8,9], sc:[2,1,2,1,3,2,-99,-6,3,2,3,-1], why:{en:"taking on new people",zh:"招聘纳人"}},
- {k:"travel",  ic:"✈️", zh:"出行 远行", en:"Travel",         fav:[1,6,8,9], sc:[2,2,1,1,-3,1,-99,-9,3,1,3,-2], why:{en:"a major journey or relocation",zh:"出行、远行、移徙"}}
+ {k:"wedding", ic:"💍", zh:"结婚 嫁娶", en:"Wedding",        pref:["yannian","shengqi"], sc:[1,0,2,1,3,1,-99,-9,3,1,3,-9], why:{en:"settling a lifelong union",zh:"缔结良缘、白头偕老"}},
+ {k:"engage",  ic:"💐", zh:"订婚 文定", en:"Engagement",     pref:["yannian","shengqi"], sc:[1,0,2,1,3,2,-99,-9,3,2,3,-2], why:{en:"a formal betrothal",zh:"文定纳采"}},
+ {k:"buyhouse",ic:"🏠", zh:"买房 置业", en:"Buy Property",   pref:["tianyi","yannian"], sc:[1,0,2,1,3,1,-99,-9,3,3,2,-2], why:{en:"acquiring a property",zh:"置产安居"}},
+ {k:"movein",  ic:"📦", zh:"入宅 乔迁", en:"Move In",        pref:["tianyi","shengqi"], sc:[1,0,2,1,3,1,-99,-9,3,3,3,-9], why:{en:"moving into a new home",zh:"入伙乔迁"}},
+ {k:"keys",    ic:"🔑", zh:"收锁匙 交屋", en:"Collect Keys",  pref:["tianyi","shengqi"], sc:[1,0,1,1,2,1,-99,-9,3,3,3,-2], why:{en:"the handover / receiving keys",zh:"领钥匙、交屋"}},
+ {k:"reno",    ic:"🔨", zh:"动土 装修", en:"Renovation",     pref:["yannian","tianyi"], sc:[0,1,1,1,3,3,-99,-9,3,1,1,-1], why:{en:"groundbreaking & renovation",zh:"动土修造"}},
+ {k:"sign",    ic:"✍️", zh:"签约 立券", en:"Sign Contract",  pref:["yannian","tianyi"], sc:[1,1,2,1,3,2,-99,-9,3,3,3,-2], why:{en:"signing & sealing an agreement",zh:"签约立券交易"}},
+ {k:"invest",  ic:"📈", zh:"投资 纳财", en:"Investment",     pref:["tianyi","shengqi"], sc:[1,0,3,1,2,2,-99,-9,3,3,2,-2], why:{en:"putting money to work",zh:"投资纳财"}},
+ {k:"business",ic:"🏪", zh:"开业 开市", en:"Start Business", pref:["tianyi","shengqi"], sc:[1,1,3,1,2,1,-99,-9,3,3,3,-9], why:{en:"launching a business",zh:"开业开市"}},
+ {k:"opening", ic:"🎊", zh:"开张 开光", en:"Grand Opening",  pref:["tianyi","shengqi"], sc:[1,0,3,1,2,1,-99,-9,3,2,3,-9], why:{en:"a grand opening ceremony",zh:"开张开光庆典"}},
+ {k:"hire",    ic:"🤝", zh:"招聘 纳人", en:"Hiring",         pref:["shengqi","yannian"], sc:[2,1,2,1,3,2,-99,-6,3,2,3,-1], why:{en:"taking on new people",zh:"招聘纳人"}},
+ {k:"travel",  ic:"✈️", zh:"出行 远行", en:"Travel",         pref:["shengqi","yannian"], sc:[2,2,1,1,-3,1,-99,-9,3,1,3,-2], why:{en:"a major journey or relocation",zh:"出行、远行、移徙"}}
 ];
-function dateEnergy(dt){let s=String(dt.getDate())+String(dt.getMonth()+1)+String(dt.getFullYear()),sum=0;for(const c of s)sum+=+c;let n=reduce(sum);return n||9;}
+/* 八星 — the number-energy field of a two-digit day number (数字能量磁场) */
+const FIELD8={
+ tianyi :{zh:"天医",en:"Tian Yi",  t:{en:"wealth & health",zh:"财富与健康"},good:true},
+ yannian:{zh:"延年",en:"Yan Nian", t:{en:"lasting & authority",zh:"长久与权威"},good:true},
+ shengqi:{zh:"生气",en:"Sheng Qi", t:{en:"vitality & helpers",zh:"生机与贵人"},good:true},
+ fuwei  :{zh:"伏位",en:"Fu Wei",   t:{en:"steady & accumulating",zh:"稳定与积累"},good:true},
+ huohai :{zh:"祸害",en:"Huo Hai",  t:{en:"disputes & sharp words",zh:"口舌是非"},good:false},
+ liusha :{zh:"六煞",en:"Liu Sha",  t:{en:"emotional entanglement / romance",zh:"情感纠葛・桃花"},good:false},
+ wugui  :{zh:"五鬼",en:"Wu Gui",   t:{en:"volatile & unstable",zh:"多变不稳"},good:false},
+ jueming:{zh:"绝命",en:"Jue Ming", t:{en:"high risk & extremes",zh:"大起大落"},good:false},
+ neutral:{zh:"中性",en:"Neutral",  t:{en:"a neutral number",zh:"中性数字"},good:null}
+};
+const _FIELDMAP={"13":"tianyi","68":"tianyi","49":"tianyi","27":"tianyi","19":"yannian","78":"yannian","34":"yannian","26":"yannian","14":"shengqi","67":"shengqi","39":"shengqi","28":"shengqi","11":"fuwei","22":"fuwei","33":"fuwei","44":"fuwei","66":"fuwei","77":"fuwei","88":"fuwei","99":"fuwei","17":"huohai","89":"huohai","46":"huohai","23":"huohai","16":"liusha","47":"liusha","38":"liusha","29":"liusha","18":"wugui","79":"wugui","36":"wugui","24":"wugui","12":"jueming","69":"jueming","48":"jueming","37":"jueming"};
+function dateField(dt){const d=dt.getDate();if(d<10)return "neutral";const a=+String(d)[0],b=+String(d)[1];if(a===5||b===5||b===0)return "neutral";return _FIELDMAP[[a,b].sort().join("")]||"neutral";}
 function clientBranch(){ if(typeof last!=='undefined'&&last&&last.zodiac){const i=ZODIAC.findIndex(z=>z.k===last.zodiac.k);return i<0?null:i;} return null; }
 const _WD={en:["Sun","Mon","Tue","Wed","Thu","Fri","Sat"],zh:["日","一","二","三","四","五","六"]};
 const _MON={en:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"],zh:["1月","2月","3月","4月","5月","6月","7月","8月","9月","10月","11月","12月"]};
 function fmtDate(dt){const wd=lang==='zh'?('周'+_WD.zh[dt.getDay()]):_WD.en[dt.getDay()];const mo=_MON[lang==='zh'?'zh':'en'][dt.getMonth()];return lang==='zh'?`${dt.getFullYear()}年${dt.getMonth()+1}月${dt.getDate()}日 ${wd}`:`${wd}, ${dt.getDate()} ${mo} ${dt.getFullYear()}`;}
 function auScore(dt,ev){
   const of=officerIdx(dt), base=ev.sc[of];
-  if(base<=0) return null;                       // not suitable (incl. 破 -99, 危, 闭)
+  if(base<=0) return null;                       // not a suitable officer (incl. 破 -99, 危, 闭)
   const cb=(dayBranchIdx(dt)+6)%12;              // the day's clash branch
   const mine=clientBranch();
   if(mine!=null && cb===mine) return null;        // clashes the person's zodiac -> drop
-  const n=dateEnergy(dt);
-  let s=base*10;
-  if(ev.fav.indexOf(n)>=0) s+=2.5;               // favourable Shuyi day-energy
-  if(mine!=null) s+=3;                           // confirmed not clashing the host
-  return {score:s, officer:of, n:n, clashBranch:cb};
+  const fk=dateField(dt), fdef=FIELD8[fk];
+  let s=base*10;                                  // Day Officer is the dominant signal
+  if(mine!=null) s+=2;                            // confirmed not clashing the host
+  if(fdef.good===true) s += (ev.pref.indexOf(fk)>=0 ? 4 : 2); // favourable number field (extra if best-fit)
+  else if(fdef.good===false) s -= 8;             // 六煞/绝命/祸害/五鬼 day-number -> push down
+  return {score:s, officer:of, field:fk, clashBranch:cb};
 }
 function findAuspicious(fromDt,toDt,ev,maxPick){
   const today=new Date(); today.setHours(0,0,0,0);
@@ -1491,20 +1507,23 @@ function runAuspicious(){
       const clashLine = lang==='zh'
         ? `当日冲${clashZ.zh}${clashZ.emo}${cb!=null?'（非命主生肖）':''}`
         : `Clashes the ${clashZ.en} ${clashZ.emo}${cb!=null?' (not the person’s sign)':''}`;
-      const favMatch = ev.fav.indexOf(p.n)>=0;
-      const en=ELEM_OF_NUM[p.n], elName=lang==='zh'?ELEM[en].zh:ELEM[en].en;
+      const fdef=FIELD8[p.field], isGood=fdef.good===true, isPref=isGood&&ev.pref.indexOf(p.field)>=0;
+      const dnum=p.dt.getDate();
+      const fieldLine = isGood
+        ? (lang==='zh'?`日子数字 <b>${dnum}</b> 属 <b>${fdef.zh}</b> 磁场（${fdef.t.zh}）${isPref?'，正合此事':''}`:`The date number <b>${dnum}</b> carries the <b>${fdef.zh} ${fdef.en}</b> field (${fdef.t.en})${isPref?', the best-fit energy for this':''}`)
+        : (lang==='zh'?`日子数字 <b>${dnum}</b> 为中性数`:`The date number <b>${dnum}</b> is neutral`);
       return `<div class="au-date"><div class="au-rank">#${i+1}</div><div class="au-dmain">
         <div class="au-dday">${fmtDate(p.dt)}</div>
-        <div class="au-chiprow"><span class="au-off">${of.zh} ${of.en}</span>${favMatch?`<span class="au-fav">${lang==='zh'?'能量旺':'strong energy'}</span>`:''}</div>
-        <p class="au-why">${lang==='zh'?`宜${ev.why.zh}：${og.zh}。`:`Good for ${ev.why.en}: ${og.en}.`} ${lang==='zh'?`当日数字能量 <b>${p.n} · ${L(NUM[p.n].title)}（${elName}）</b>${favMatch?'，为此事的旺数':''}。`:`Day energy <b>${p.n} · ${L(NUM[p.n].title)} (${elName})</b>${favMatch?', a strong number for this':''}.`} <span class="au-clash">${clashLine}。</span></p>
+        <div class="au-chiprow"><span class="au-off">${of.zh} ${of.en}</span>${isGood?`<span class="au-fav">${fdef.zh} ${fdef.en}</span>`:''}</div>
+        <p class="au-why">${lang==='zh'?`宜${ev.why.zh}：${og.zh}。`:`Good for ${ev.why.en}: ${og.en}.`} ${fieldLine}。 <span class="au-clash">${clashLine}。</span></p>
       </div></div>`;
     }).join(""); }
     h+=`</div>`;
   }
   const noteCap = capped?(lang==='zh'?'（范围较大，已显示前 6 个月。）':'(Range was large — showing the first 6 months.)'):'';
   h+=`<p class="au-method">${lang==='zh'
-    ? `择日依据：<b>建除十二神</b>（由节气定月建）、当日 <b>六冲</b> 与本应用的 <b>数字能量</b>综合挑选。婚嫁、签约等大事，建议再以双方完整命盘核对，并另择<b>吉时</b>。${noteCap}`
-    : `Method: this shortlist combines the <b>12 Day Officers (建除)</b> (month set by the solar terms), the day’s <b>six-clash (六冲)</b> and this app’s <b>Shuyi day-energy</b>. For a wedding or a major signing, confirm the final pick against both parties’ full charts, and choose an auspicious <b>hour (吉时)</b> separately. ${noteCap}`}</p>`;
+    ? `择日依据：以 <b>建除十二神</b>（由节气定月建）与当日 <b>六冲</b> 为主，再参考日子数字的 <b>八星磁场</b>（取吉场天医・延年・生气・伏位，避凶场六煞〔如38〕・绝命・祸害・五鬼）。注意：这里的‘数字’是<b>日子的两位数磁场</b>，与命盘中单个数字的吉凶是两回事。婚嫁、签约等大事，建议再以双方完整命盘核对，并另择<b>吉时</b>。${noteCap}`
+    : `Method: this shortlist is driven by the <b>12 Day Officers (建除)</b> (month set by the solar terms) and the day’s <b>six-clash (六冲)</b>, then refined by the date number’s <b>number-energy field (八星)</b> — favouring 天医/延年/生气/伏位 and avoiding 六煞 (e.g. 38), 绝命, 祸害 and 五鬼. Note: this “number” is the <b>two-digit field of the date</b>, which is a different thing from a single number in a birth chart. For a wedding or a major signing, confirm against both parties’ full charts and pick an auspicious <b>hour (吉时)</b> separately. ${noteCap}`}</p>`;
   out.innerHTML=h;
   try{out.scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
 }
