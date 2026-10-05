@@ -378,6 +378,13 @@ footer .disc{max-width:60ch;margin:8px auto 0;font-size:.72rem;line-height:1.5}
 .cl-lbl.bad{background:color-mix(in srgb,var(--bad) 15%,transparent);color:var(--bad)}
 .cl-txt{font-size:.8rem;color:var(--ink-soft)}
 .cl-note{font-size:.78rem;color:var(--ink-faint);margin:11px 0 0;line-height:1.55}
+/* reading-hours note + closed message */
+.calc-hours{font-size:.76rem;color:var(--ink-faint);text-align:center;margin:10px 2px 0;line-height:1.5}
+.calc-closed{margin-top:14px;padding:18px 16px;border:1px solid var(--gold);border-radius:12px;background:linear-gradient(160deg,var(--surface2),var(--surface));text-align:center}
+.calc-closed .cc-clock{font-size:1.9rem;line-height:1}
+.calc-closed .cc-h{font-family:var(--font-serif);font-weight:700;color:var(--crimson);font-size:1.05rem;margin-top:6px}
+.calc-closed .cc-why{font-size:.86rem;color:var(--ink-soft);margin:10px auto 0;max-width:52ch;line-height:1.6}
+.calc-closed .cc-now{font-size:.82rem;color:var(--gold-deep);font-weight:600;margin:12px 0 0}
 
 /* public free calculator */
 .calc-card{text-align:center}
@@ -1266,10 +1273,27 @@ function simpleTriSVG(){
   </svg>`;
 }
 function elementKey(n){return {1:"metal",6:"metal",2:"water",7:"water",3:"fire",8:"fire",4:"wood",9:"wood",5:"earth"}[n];}
+/* Shuyi etiquette: a reading is taken only during the day's yang hours, 7am–9pm */
+function readingHoursOpen(){ const h=new Date().getHours(); return h>=7 && h<21; }
 function runPublicCalc(){
   const dI=document.getElementById("cDay"),mI=document.getElementById("cMon"),yI=document.getElementById("cYear");
   const err=document.getElementById("cErr"),res=document.getElementById("cResult");
   if(!dI||!res) return;
+  if(!readingHoursOpen()){
+    if(err) err.classList.add("hide");
+    const now=new Date(), hh=now.getHours(), mm=String(now.getMinutes()).padStart(2,'0'), h12=((hh%12)||12), ap=hh<12?'AM':'PM';
+    const tnow=lang==='zh'?`现在是 ${hh}:${mm}`:`It's now ${h12}:${mm} ${ap}`;
+    res.innerHTML=`<div class="calc-closed">
+      <div class="cc-clock">🕗</div>
+      <div class="cc-h">${lang==='zh'?'测算时间 · 早上 7 点 — 晚上 9 点':'Reading Hours · 7 AM – 9 PM'}</div>
+      <p class="cc-why">${lang==='zh'
+        ? '易经术数讲究顺应天时。白昼为阳，气清而明，故测算只在早上 7 点至晚上 9 点之间进行。晚上 9 点后至清晨 7 点属阴，气息归藏，此时起数被视为不清、不准。出于对术数的敬重，测算在此时段暂歇。'
+        : 'In the I Ching (Shuyi) tradition, a reading is taken only during the day’s <b>yang hours — 7 AM to 9 PM</b> — when the energy (气) is bright, clear and active. Before 7 AM and after 9 PM is <b>yin time</b>, when energy settles inward and a reading is considered unclear and less accurate. Out of respect for the method, the calculator rests during these hours.'}</p>
+      <p class="cc-now">${tnow} · ${lang==='zh'?'请于早上 7 点至晚上 9 点之间再来测算 🙏':'Please come back between 7 AM and 9 PM 🙏'}</p>
+    </div>`;
+    try{res.querySelector(".calc-closed").scrollIntoView({behavior:"smooth",block:"nearest"});}catch(e){}
+    return;
+  }
   const d=parseInt(dI.value,10),m=parseInt(mI.value,10),y=parseInt(yI.value,10);
   function fail(msg){err.textContent=msg;err.classList.remove("hide");res.innerHTML="";}
   if(!d||!m||!y||d<1||d>31||m<1||m>12||y<1900||y>2100){ fail(lang==='zh'?'请输入有效的出生日期。':'Please enter a valid birthday.'); return; }
@@ -1317,6 +1341,7 @@ function renderPublic(){
           <div class="field"><label>${lang==='zh'?'年 Year':'Year 年'}</label><input id="cYear" type="number" min="1900" max="2100" inputmode="numeric" placeholder="1990"></div>
         </div>
         <button class="calcbtn" id="cGo">${lang==='zh'?'揭晓我的核心数字 ✦':'Reveal My Core Number ✦'}</button>
+        <p class="calc-hours">🕗 ${lang==='zh'?'测算时间：早上 7 点 — 晚上 9 点。依易经传统，术数只在白昼阳气清明之时测算。':'Reading hours: 7 AM – 9 PM. In the I Ching tradition, numerology is calculated only during the day’s bright yang hours.'}</p>
         <div class="calc-err hide" id="cErr"></div>
         <div id="cResult"></div>
       </div></section>`;
