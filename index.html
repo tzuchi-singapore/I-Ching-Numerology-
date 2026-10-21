@@ -1176,7 +1176,7 @@ function compute(day,month,year){
    {key:"father",role:{en:"Father Gene",zh:"父基因"},v:[A,B,E]},
    {key:"mother",role:{en:"Mother Gene",zh:"母基因"},v:[C,D,F]},
    {key:"main",role:{en:"Main Character",zh:"主性格"},v:[E,F,G]},
-   {key:"hidden",role:{en:"Hidden Number",zh:"隐藏号"},v:[H,E,B]},
+   {key:"hidden",role:{en:"Hidden Number",zh:"隐藏号"},v:[reduce(E+E),reduce(F+F),reduce(G+G)]},
    {key:"internal",role:{en:"Internal Relations",zh:"对内关系"},v:[E,G,I]},
    {key:"external",role:{en:"External Relations",zh:"对外关系"},v:[F,G,H]},
    {key:"subord",role:{en:"Subordinates / Children",zh:"下属子女"},v:[H,I,J]},
@@ -2002,7 +2002,9 @@ function renderCycle(y,m,d){
   const now=new Date();
   y=parseInt(y)||now.getFullYear(); m=parseInt(m)||(now.getMonth()+1); d=parseInt(d)||now.getDate();
   const r=last;
-  const cy=cycleYear(r.day,r.month,y);
+  // Cycle year (流年) runs 1 Oct → 30 Sep: from October the next year's cycle applies. Month & day use the real year.
+  const cyY = m>=10 ? y+1 : y;
+  const cy=cycleYear(r.day,r.month,cyY);
   const cm=cycleMonth(r.day,r.month,m,y);
   const cd=cycleDay(r.day,r.month,d,m,y);
   const C=CYCLE[cy]; const kind=C.kind;
@@ -2020,10 +2022,11 @@ function renderCycle(y,m,d){
    </div>
    <div class="cyc-big">
      <div class="cyc-num">${cy}</div>
-     <div class="cyc-meta"><div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:700">${y} · ${L(UI.cycleYear)}</div>
+     <div class="cyc-meta"><div style="font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold-deep);font-weight:700">${cyY} · ${L(UI.cycleYear)}</div>
        <h3>${L(C.t)}</h3><span class="kind ${kcls}">${L(CYCLE_KIND[kind])}</span></div>
    </div>
    <p style="font-size:.92rem;color:var(--ink-soft);margin-top:8px">${L(C.d)}</p>
+   <p style="font-size:.8rem;color:var(--gold-deep);margin-top:6px">${lang==='zh'?'流年从每年10月1日开始，至次年9月30日结束。'+(cyY!==y?`所选日期已过10月1日，故走的是 ${cyY} 年的流年。`:''):'A cycle year runs from 1 October to 30 September of the next year.'+(cyY!==y?` The chosen date is after 1 October, so it already belongs to the ${cyY} cycle year.`:'')}</p>
    <div class="cyc-mini">
      <div class="m"><div class="l">${L(UI.cycMonth)} · ${lang==='zh'?'计划':'Plan'}</div><div style="display:flex;align-items:baseline;gap:8px"><span class="c">${cm}</span><span style="font-size:.9rem;color:var(--ink)">${L(CYCLE[cm].t)}</span></div></div>
      <div class="m"><div class="l">${L(UI.cycDay)} · ${lang==='zh'?'行动':'Action'}</div><div style="display:flex;align-items:baseline;gap:8px"><span class="c">${cd}</span><span style="font-size:.9rem;color:var(--ink)">${L(CYCLE[cd].t)}</span></div></div>
