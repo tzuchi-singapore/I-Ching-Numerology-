@@ -2359,7 +2359,7 @@ function renderNL(){
   const chars=[...sur,...giv];
   const strokes=chars.map((c,i)=>strokeFor(c,i));
   const missing=strokes.some(s=>!s.n);
-  const nc=missing?null:nameCalc(sur,giv,strokes.map(s=>s.n));
+  const nc=(missing||giv.length===0)?null:nameCalc(sur,giv,strokes.map(s=>s.n));
   const zchk=giv.map((c,i)=>{const info=strokes[sur.length+i].info; return info?zodiacCheck(animal,info.tags):null;});
   renderCheck(zi,sur,giv,strokes,nc,zchk);
   renderSug(zi,sur,giv,strokes);
@@ -2381,7 +2381,7 @@ function renderCheck(zi,sur,giv,strokes,nc,zchk){
       ${info?`<label class="nl-field">Form & strokes<select data-nlform="${i}${c}">${opts}</select></label>`:manual}${z}</div>`;
   }).join("");
   let body;
-  if(!nc){ body=`<div class="nl-chars">${cards}</div><p class="nl-muted" style="margin-top:10px">Enter stroke counts for the characters above to see the five grids.</p>`; }
+  if(!nc){ const onlySur=giv.length===0; const msg=onlySur?"For a baby with no name yet: the name ideas are below \u2193. Add a given name here too if you want a full diagnosis of an existing name.":"Enter stroke counts for the characters above to see the five grids."; body=`<div class="nl-chars">${cards}</div><p class="nl-muted" style="margin-top:10px">${msg}</p>`; }
   else {
     const G=nc.g;
     const gridDef=[["tian","天格","Heaven · ancestry","fixed by surname; little personal effect"],["ren","人格","Person · main fortune","core personality and main fortune"],["di","地格","Earth · early luck","early life, up to about 36"],["wai","外格","Outer","friends, social help"],["zong","总格","Total · later luck","middle to later life"]];
